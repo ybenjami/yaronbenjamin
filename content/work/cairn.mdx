@@ -1,0 +1,41 @@
+---
+title: 'Cairn'
+---
+
+## The problem
+
+[Two or three sentences on what you saw: separate vendors for the website, ticketing, membership and donations, and visitors who can't get quick answers when planning a visit.]
+
+[What it costs venues: slow launches, inconsistent brands, missed ticket and membership sales.]
+
+## Architecture
+
+Cairn is three layers that every venue shares, configured per venue rather than rebuilt.
+
+<Architecture />
+
+## Key decisions
+
+<Decisions>
+  <Decision n="01" title="A dedicated deployment per venue">
+    Each venue owns its data and infrastructure, while every launch reuses the same platform instead of rebuilding it.
+  </Decision>
+  <Decision n="02" title="CMS adapters, not a new CMS">
+    Contentful and Contentstack adapters map to one shared content model, so venues keep the tools their teams already know.
+  </Decision>
+  <Decision n="03" title="Scout on Eve, sharing Conduit">
+    The concierge sells through the same commerce layer as the website, so answers and checkout never drift apart.
+  </Decision>
+</Decisions>
+
+## Results
+
+<Stats>
+  <Stat value="[X days]" label="To stand up a new venue" />
+  <Stat value="[Score]" label="Lighthouse performance" />
+  <Stat value="[Number]" label="Scout conversations or bookings" />
+</Stats>
+
+## What I learned
+
+[Two or three honest lessons from building Cairn. This is where your point of view shows, and it is the part readers remember.]
