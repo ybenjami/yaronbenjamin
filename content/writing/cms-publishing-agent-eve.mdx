@@ -1,29 +1,99 @@
 ---
 title: 'Building a CMS publishing agent with Eve and Contentful'
 publishedAt: '2026-11-01'
-summary: 'How I gave an AI agent safe, reviewable access to a headless CMS, and why the human approval step matters more than the model.'
+summary: 'Why I built an agent that prepares content in Contentful but leaves publishing to a person, and why the hard part was behavior, not the integration.'
 theme: 'ai-agents'
 draft: true
 ---
 
-This post is a draft. It shows while you run the site locally and stays hidden on the live site until you delete the `draft: true` line above.
+The idea didn't come from a client project. It came from working on our own website and marketing at Aionic.
 
-## The idea
+More and more of our research, analysis and strategy now happens inside an LLM. We use agents to research topics, work through ideas, shape a strategy and draft content, and that thinking often spans several conversations and sessions.
 
-[Why content teams need an agent that can publish, and why most attempts are risky.]
+What started to frustrate me was what came next. After all that work with an agent, I still had to copy the output, switch screens, paste it into another system and essentially translate the work into something actionable.
 
-## How the skill works
+The copying and pasting is annoying, but it isn't really the problem. The problem is the context switching, and the disconnect between where the thinking happens and where the work actually gets done.
 
-[Walk through the Eve skill: reading the content model, drafting an entry, validating it, and staging it for approval.]
+If I'm already working with an agent to research and develop a piece of content, why can't that same agent take the next step and prepare it in the CMS?
 
-```ts
-// [Paste a short, real snippet from your skill here]
-```
+That was the spark. I wanted to remove the friction between creating content and managing it, without abandoning the tools and workflows we already rely on.
 
-## Why the approval step matters
+## What the agent actually does
 
-[Your point of view on human-in-the-loop publishing.]
+I'm a big proponent of making life easier, but not necessarily riskier.
 
-## What's next
+When someone asks the agent to create or update content, it takes that information, maps it to the right content type and fields in Contentful, and creates or updates the entry.
 
-[Link to the GitHub repo and what you plan to build next.]
+Here's the important part: **the agent doesn't publish anything.**
+
+It prepares the content in the CMS and hands it off to the normal review and publishing process. In my implementation, that means it creates or updates the draft and returns a direct link to the entry in Contentful, where someone can review it before it goes live.
+
+I didn't want to invent a new workflow just because AI was involved. The point was to make the existing workflow more efficient.
+
+There's a real distinction between preparing content and making it publicly available. The agent is capable of doing the work. That doesn't mean it should have the authority to take every action. For now, I want a person making that final call.
+
+The agent handles the repetitive work. The editorial controls that already exist stay exactly where they are.
+
+## The hard part wasn't the integration
+
+I expected connecting the agent to Contentful to be the difficult piece. It wasn't. The hard part was getting the behavior right.
+
+Specifically, I wanted the agent to act intelligently when what I gave it didn't neatly fit the content model.
+
+That sounds simple. It isn't.
+
+Sometimes I'd ask the agent to update an entry and give it more information than the content type supports. In that case I don't want it to fail, and I don't want it to ask me a dozen questions. I want it to update everything it reasonably can, leave out what doesn't belong, and tell me what it couldn't accommodate.
+
+Other times I'd reference a content type ambiguously, or ask for something where the agent genuinely should stop and clarify before it changes anything.
+
+The challenge is the balance. The agent has to be smart enough to understand intent and handle imperfect requests gracefully. It also has to respect the content model underneath: required fields, validations, relationships.
+
+If it's too rigid, every interaction becomes a chore. If it's too permissive, it starts making assumptions, dropping important information or accepting things it shouldn't. And there's a difference between leaving out an optional field that doesn't apply and quietly ignoring information that matters. The agent has to recognize that difference.
+
+Giving an agent the ability to talk to Contentful is the easy part. Deciding how it should behave when the user's intent and the CMS's constraints don't line up is where most of the engineering actually lives.
+
+## Execution is not authority
+
+I think we're still very early in how we think about agents, especially when it comes to giving up control.
+
+There's understandable nervousness about letting agents act on our behalf, and some of it is justified. An agent with broad permissions and no meaningful guardrails can absolutely introduce risk.
+
+But I think we often frame the problem as a choice between automation and control. I don't believe it is one.
+
+**We're not necessarily giving up control by letting agents take action. If we architect these systems well, we're giving ourselves the ability to move faster while keeping the controls that matter.**
+
+The distinction I care about is between letting an agent execute a task and giving it unrestricted authority over the outcome.
+
+Publishing is a good example. I'm comfortable letting an agent create content, map it to the right content type and get it ready for publication. That doesn't mean I want it to publish everything it creates. There should be boundaries, and they should reflect the risk of the action.
+
+Over time I think we'll get more comfortable letting agents work independently, particularly on low-risk tasks. But that autonomy should be deliberate.
+
+The goal shouldn't be to remove people from every workflow. It should be to remove unnecessary human effort while keeping meaningful oversight where it's needed. The better question isn't whether agents or humans should be in control. It's how we design systems where agents do useful work inside well-defined boundaries.
+
+## Why I built it on Eve
+
+For me, the choice came down to having a framework at all.
+
+I need enough structure and guardrails to build agents quickly without architecting everything from the ground up. Without a framework, I end up solving problems that teams of engineers have already solved. Those are often interesting problems. They just aren't the problem I'm trying to solve.
+
+Take conversation memory. Building an agent from scratch, I'd have to work out how memory is persisted, how context carries across sessions, how it's retrieved and how it feeds into the agent's execution. That's a meaningful amount of architecture before I've touched the actual business problem.
+
+A framework like Eve gives me a foundation for those concerns, so more of my time goes into what makes the agent useful.
+
+That doesn't mean the framework removes the need for good architecture. Far from it. I still have to design the agent's behavior, its integrations, its permissions, its validation and its user experience. But there's a difference between architecting what's unique to my application and rebuilding infrastructure that should already be solved.
+
+## We've been here before
+
+I remember building applications in the mid-2000s.
+
+There were so many patterns, frameworks and reference implementations for concepts that were sometimes genuinely complex. We navigated competing approaches to dependency injection, application structure, persistence and countless other concerns. Even relatively simple applications could demand a huge amount of upfront architectural decision-making.
+
+It wasn't that we lacked frameworks. We had plenty. The challenge was that there were so many competing approaches, and it wasn't always obvious which decisions actually mattered. Sometimes the complexity was overwhelming, especially when all you wanted was to solve a business problem.
+
+I see a lot of parallels in how we're approaching AI, agents and orchestration today. We're making decisions about memory, context management, tool execution, orchestration, human approvals and a growing list of other concerns. There are numerous frameworks and patterns, and the ecosystem is changing incredibly fast.
+
+I think we're in a similar period now: figuring out which approaches will become standard, and which concerns should simply be handled by the frameworks we choose.
+
+So my advice to another engineer looking at Eve is to think carefully about how much infrastructure you actually want to own. I'm not interested in a framework for its own sake. I'm interested in a solid foundation that lets me focus on building agents that are useful.
+
+In the end, I want to spend my time solving the problem, not rebuilding the machinery required to solve it.
