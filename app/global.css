@@ -15,6 +15,58 @@
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-pixel: 'Silkscreen', ui-monospace, monospace;
+
+  --animate-rise: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-stone: stone 0.6s cubic-bezier(0.3, 1.4, 0.5, 1) both;
+  --animate-blink: blink 1.6s steps(1) infinite;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes stone {
+    from {
+      opacity: 0;
+      transform: translateY(-3px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes blink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.25;
+    }
+  }
+}
+
+/* Scroll reveal (components/reveal.tsx) */
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    transition:
+      opacity 0.8s cubic-bezier(0.2, 0.7, 0.2, 1),
+      transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .reveal:not([data-shown]) {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+}
+
+/* Pixel cairn stones settle one at a time */
+.stone {
+  transform-box: fill-box;
 }
 
 :root {

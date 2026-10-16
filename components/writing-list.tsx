@@ -44,7 +44,9 @@ export function WritingList({
             <>
               <div className="flex min-w-0 flex-[999_1_480px] flex-col gap-2">
                 <div className="font-mono text-xs uppercase text-accent">{item.themeLabel}</div>
-                <div className="text-2xl font-medium tracking-[-0.02em] text-white md:text-[26px]">{item.title}</div>
+                <div className="text-2xl font-medium tracking-[-0.02em] text-white transition-transform duration-300 group-hover:translate-x-1.5 md:text-[26px]">
+                  {item.title}
+                </div>
               </div>
               <div className="font-mono text-sm text-subtle">{upcoming ? 'Coming soon' : item.date}</div>
             </>

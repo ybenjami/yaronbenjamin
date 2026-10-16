@@ -13,7 +13,7 @@ export function Nav() {
     <header>
       <Container className="flex flex-wrap items-center justify-between gap-4 py-7">
         <Link href="/" className="flex items-center gap-3 text-fg">
-          <PixelCairn />
+          <PixelCairn animate />
           <span className="font-pixel text-base tracking-[0.04em]">YARON BENJAMIN</span>
         </Link>
         <nav aria-label="Main" className="flex flex-wrap items-center gap-6 text-[15px] sm:gap-7">

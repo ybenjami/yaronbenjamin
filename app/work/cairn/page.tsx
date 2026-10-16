@@ -15,7 +15,7 @@ export const metadata = {
 const details = [
   { label: 'Role', value: 'Creator and lead engineer, Aionic Digital' },
   { label: 'Stack', value: 'Next.js, Eve, Contentful, Contentstack, Vercel' },
-  { label: 'Status', value: 'Laprade Zoo reference build; Omaha Zoo in development' },
+  { label: 'Status', value: 'Laprade Zoo reference build; first venue deployments underway' },
 ]
 
 export default function CairnPage() {
@@ -74,7 +74,7 @@ export default function CairnPage() {
           <div className="flex min-w-0 flex-[999_1_480px] flex-col gap-4">
             <PixelLabel accent>Next</PixelLabel>
             <h2 className="title text-[clamp(32px,4vw,48px)] font-semibold leading-[1.08] tracking-[-0.04em] text-white">
-              Omaha Zoo is the first production venue. More are next.
+              The first venue deployments are underway. More are next.
             </h2>
           </div>
           <div className="flex flex-wrap gap-3">
