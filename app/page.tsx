@@ -61,8 +61,8 @@ export default function Home() {
             Ideas on building web platforms, and the AI that runs on them.
           </h1>
           <p className="max-w-[620px] text-xl leading-relaxed text-muted motion-safe:animate-rise [animation-delay:180ms]">
-            I&apos;m Yaron, CEO of Aionic Digital and creator of Cairn. Twenty years of shipping headless CMS,
-            Next.js and AI agents, and what I&apos;ve learned along the way.
+            I&apos;m Yaron, CEO of Aionic Digital and creator of Cairn. Twenty years building for the web, from
+            early CMS platforms to headless architecture and AI agents, and what I&apos;ve learned along the way.
           </p>
           <div className="flex flex-wrap gap-3 pt-2 motion-safe:animate-rise [animation-delay:270ms]">
             <PillLink href="#writing">Read the writing</PillLink>
