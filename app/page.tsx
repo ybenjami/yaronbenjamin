@@ -207,6 +207,7 @@ export default function Home() {
                       e.org
                     )}
                   </div>
+                  <p className="mt-1.5 max-w-[560px] text-[15px] leading-relaxed text-subtle">{e.note}</p>
                 </div>
                 <div className="font-mono text-sm text-subtle">{e.years}</div>
               </li>

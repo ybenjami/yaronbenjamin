@@ -37,9 +37,30 @@ export const upcoming: { title: string; theme: ThemeId }[] = [
   { title: 'What twenty years of CMS migrations taught me about content models', theme: 'content-platforms' },
 ]
 
-export const experience = [
-  { role: 'Founder & CEO, creator of Cairn', org: 'Aionic Digital', href: site.links.aionic, years: '2024 – Now' },
-  { role: 'Director of Technical Services', org: 'authentic digital agency', years: '2015 – 2024' },
-  { role: 'Sr. IT Analyst', org: 'Genworth Financial', years: '2011 – 2015' },
-  { role: 'Web Developer → Senior Web Developer', org: 'ManTech, Defense Commissary Agency, Apex Systems', years: '2006 – 2011' },
+export const experience: { role: string; org: string; href?: string; years: string; note: string }[] = [
+  {
+    role: 'Founder & CEO, creator of Cairn',
+    org: 'Aionic Digital',
+    href: site.links.aionic,
+    years: '2024 – Now',
+    note: 'Leading the company and building Cairn, its platform for zoos, aquariums and attractions.',
+  },
+  {
+    role: 'Senior Architect → Director of Technical Services',
+    org: 'authentic digital agency',
+    years: '2015 – 2024',
+    note: 'Promoted to lead technical services across every client project, while staying hands-on as architect on the largest ones.',
+  },
+  {
+    role: 'Sr. IT Analyst',
+    org: 'Genworth Financial',
+    years: '2011 – 2015',
+    note: 'Architecture and application development in financial services.',
+  },
+  {
+    role: 'Software Engineer → Senior Software Engineer',
+    org: 'ManTech, then the Department of Defense',
+    years: '2006 – 2011',
+    note: 'Built web applications for the Defense Commissary Agency, first as a ManTech contractor, then hired on directly.',
+  },
 ]
