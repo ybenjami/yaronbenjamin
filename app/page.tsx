@@ -8,10 +8,9 @@ import { formatDate, getPosts } from '@/lib/posts'
 import { experience, site, themeLabel, themes, upcoming } from '@/lib/site'
 
 const glance = [
-  { value: '20 years', label: 'Building content-driven web' },
-  { value: '2 CMS adapters', label: 'Contentful and Contentstack' },
-  { value: 'Built on Eve', label: 'AI concierge in production build' },
-  { value: 'AWS SA', label: 'Certified Solutions Architect' },
+  { value: '20 years', label: 'Web, commerce, loyalty and backend platforms' },
+  { value: 'Engineer to CEO', label: 'Developer, architect, agency director, founder' },
+  { value: 'Hands-on', label: 'Building open-source AI agents today' },
 ]
 
 const otherWork = [
