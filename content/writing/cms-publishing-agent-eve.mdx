@@ -1,7 +1,7 @@
 ---
 title: 'Building a CMS publishing agent with Eve and Contentful'
 publishedAt: '2026-11-01'
-summary: 'Why I built an agent that prepares content in Contentful but leaves publishing to a person, and why the hard part was behavior, not the integration.'
+summary: 'Why I built an agent that prepares content in Contentful but cannot publish it, and why the hard part was behavior, not the integration.'
 theme: 'ai-agents'
 draft: true
 ---
@@ -22,9 +22,9 @@ That was the spark. I wanted to remove the friction between creating content and
 
 I'm a big proponent of making life easier, but not necessarily riskier.
 
-When someone asks the agent to create or update content, it takes that information, maps it to the right content type and fields in Contentful, and creates or updates the entry.
+When someone asks the agent to create or update content, from Slack or a terminal, it takes that information, maps it to the right content type and fields in Contentful, and creates or updates the entry.
 
-Here's the important part: **the agent doesn't publish anything.**
+Here's the important part: **the agent doesn't publish anything. It can't.**
 
 It prepares the content in the CMS and hands it off to the normal review and publishing process. In my implementation, that means it creates or updates the draft and returns a direct link to the entry in Contentful, where someone can review it before it goes live.
 
@@ -33,6 +33,18 @@ I didn't want to invent a new workflow just because AI was involved. The point w
 There's a real distinction between preparing content and making it publicly available. The agent is capable of doing the work. That doesn't mean it should have the authority to take every action. For now, I want a person making that final call.
 
 The agent handles the repetitive work. The editorial controls that already exist stay exactly where they are.
+
+## The guardrail lives in the architecture
+
+When I connected the agent to Contentful's hosted MCP server, it exposed 85 tools. That includes publishing, deleting entries and changing environments, and nothing on the server side filtered them out for me.
+
+So I didn't rely on instructions telling the agent not to publish. Eve lets a connection expose an allow-list of tools, and mine exposes eight: enough to read the content model, search and read entries, and create or update drafts. Publishing, unpublishing and deleting simply aren't available to it.
+
+I also pinned the space and environment in configuration, so the model never chooses where it writes. It works in a sandbox environment, and there's no parameter it can change to point somewhere else. Each person signs in to Contentful with their own account, so the agent works within their permissions rather than a shared key.
+
+One tool I left out on purpose was the preview URL tool. It looked useful, but it returns the preview site's URL, which can carry preview secrets. The agent returns a plain link to the entry in Contentful instead.
+
+A prompt is a request. An allow-list is a boundary. For anything with real consequences, I want the boundary.
 
 ## The hard part wasn't the integration
 
@@ -49,6 +61,17 @@ Other times I'd reference a content type ambiguously, or ask for something where
 The challenge is the balance. The agent has to be smart enough to understand intent and handle imperfect requests gracefully. It also has to respect the content model underneath: required fields, validations, relationships.
 
 If it's too rigid, every interaction becomes a chore. If it's too permissive, it starts making assumptions, dropping important information or accepting things it shouldn't. And there's a difference between leaving out an optional field that doesn't apply and quietly ignoring information that matters. The agent has to recognize that difference.
+
+Building it turned that balance into a handful of concrete rules:
+
+- **One field, one purpose.** If I mention an author or a sponsor and the content type has no field for it, the agent doesn't fold it into the body text. It leaves it out and tells me.
+- **Keep my words.** Content goes in as I wrote it. Derived fields like a slug or a summary only restate what I gave it.
+- **Never invent a required value.** Contentful only enforces required fields at publish time, so the agent can save a draft without them. It does, and lists what's still missing, instead of making something up to fill the gap.
+- **Don't pick when it's ambiguous.** If I don't name a content type and more than one fits, it asks.
+- **Only link to what exists.** References point to entries it actually found, not ones it assumes are there.
+- **Be clear about what changed.** If it updates an entry that's already published, it says so, and the live version stays as it was until someone publishes.
+
+To keep myself honest, I turned the hardest of these cases into evals: a request with more information than the content type supports, one missing a required field, an ambiguous content type, and an update to an already-published entry. Contentful is stubbed with fixtures so the tests are repeatable. All four pass, twelve for twelve across three full runs.
 
 Giving an agent the ability to talk to Contentful is the easy part. Deciding how it should behave when the user's intent and the CMS's constraints don't line up is where most of the engineering actually lives.
 
@@ -97,3 +120,7 @@ I think we're in a similar period now: figuring out which approaches will become
 So my advice to another engineer looking at Eve is to think carefully about how much infrastructure you actually want to own. I'm not interested in a framework for its own sake. I'm interested in a solid foundation that lets me focus on building agents that are useful.
 
 In the end, I want to spend my time solving the problem, not rebuilding the machinery required to solve it.
+
+## Try it
+
+The agent is open source under the MIT license at [github.com/ybenjami/cms-publishing-agent](https://github.com/ybenjami/cms-publishing-agent). The README covers setup, the guardrails and the evals.

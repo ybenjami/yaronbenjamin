@@ -15,11 +15,11 @@ const glance = [
 
 const otherWork = [
   {
-    kicker: 'Open source · In progress',
-    title: 'CMS publishing skill for Eve',
-    text: 'An agent skill that drafts, validates and stages entries in Contentful and Contentstack, with a human approving every publish.',
-    href: '#',
-    cta: '[GitHub link]',
+    kicker: 'Open source · MIT',
+    title: 'CMS publishing agent',
+    text: 'An Eve agent that turns plain-language requests into draft entries in Contentful, from Slack or a terminal. It can\'t publish: a person always makes that call.',
+    href: 'https://github.com/ybenjami/cms-publishing-agent',
+    cta: 'View on GitHub ↗',
   },
   {
     kicker: 'authentic digital agency',
