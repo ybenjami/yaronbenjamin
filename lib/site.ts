@@ -58,6 +58,12 @@ export const experience: { role: string; org: string; href?: string; years: stri
     note: 'Architecture and application development in financial services.',
   },
   {
+    role: 'Java Developer (contract)',
+    org: 'Kinsale Insurance, through Apex Systems',
+    years: '2011',
+    note: "Developed features for Kinsale's custom underwriting platform.",
+  },
+  {
     role: 'Software Engineer → Senior Software Engineer',
     org: 'ManTech, then the Department of Defense',
     years: '2006 – 2011',
