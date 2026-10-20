@@ -1,7 +1,8 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import { PixelCairn } from '@/components/pixel-cairn'
 import { Reveal } from '@/components/reveal'
-import { Container, MonoLabel, PillLink, PixelLabel, Placeholder, SectionHeading, Tag } from '@/components/ui'
+import { Container, MonoLabel, PillLink, PixelLabel, SectionHeading, Tag } from '@/components/ui'
 import { WritingList } from '@/components/writing-list'
 import { formatDate, getPosts } from '@/lib/posts'
 import { experience, site, themeLabel, themes, upcoming } from '@/lib/site'
@@ -72,8 +73,14 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-[1_1_300px] flex-col items-center gap-5 motion-safe:animate-rise [animation-delay:240ms]">
-          {/* Replace with: <Image src="/headshot.jpg" alt="Yaron Benjamin" width={300} height={360} className="rounded-[28px] grayscale" /> */}
-          <Placeholder label="Your headshot, black and white" className="h-[360px] w-[300px]" />
+          <Image
+            src="/headshot.jpg"
+            alt="Yaron Benjamin"
+            width={300}
+            height={360}
+            priority
+            className="h-[360px] w-[300px] rounded-[28px] border border-line object-cover grayscale"
+          />
           <div className="flex items-center gap-2.5 font-mono text-[13px] text-muted">
             <span aria-hidden="true" className="h-2 w-2 bg-accent motion-safe:animate-blink" />
             Writing about web platforms and AI
