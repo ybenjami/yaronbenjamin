@@ -43,7 +43,7 @@ export const experience: { role: string; org: string; href?: string; years: stri
     org: 'Aionic Digital',
     href: site.links.aionic,
     years: '2024 – Now',
-    note: 'Leading the company and building Cairn, its platform for zoos, aquariums and attractions.',
+    note: 'Leading the company through the shift to AI, delivering client projects while building Cairn, our platform for zoos, aquariums and attractions.',
   },
   {
     role: 'Senior Architect → Director of Technical Services',
@@ -59,9 +59,9 @@ export const experience: { role: string; org: string; href?: string; years: stri
   },
   {
     role: 'Java Developer (contract)',
-    org: 'Kinsale Insurance, through Apex Systems',
+    org: 'Insurance company, through Apex Systems',
     years: '2011',
-    note: "Developed features for Kinsale's custom underwriting platform.",
+    note: 'Developed and helped architect a custom underwriting platform.',
   },
   {
     role: 'Software Engineer → Senior Software Engineer',
