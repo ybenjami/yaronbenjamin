@@ -1,0 +1,70 @@
+---
+title: 'Why I stopped building websites and started building platforms'
+publishedAt: '2026-11-08'
+summary: 'When scope, time and budget are all fixed, something has to give. Why I moved from one-off builds to a platform, and when a platform is the wrong call.'
+theme: 'platforms-over-projects'
+draft: true
+---
+
+I noticed it pretty early on: we were building the same things on every project.
+
+Not identical things. The brands were different, the designs were different, and the clients spanned a lot of verticals. But underneath, the patterns repeated: the same content structures, the same integrations, the same publishing workflows, the same plumbing that every site needs and no client ever sees.
+
+The industry's usual answer is the accelerator: a starter kit of components and patterns you bring to each new project. I built plenty of them. They save some time. But in the end you're still building the same thing over and over again, just starting a little further along.
+
+## The math of a project
+
+A project is bespoke. Everything is custom, and it's built quickly and documented quickly, because the clock is always running.
+
+Every project is the same equation: **scope + time + budget.** When all three are fixed, which they almost always are, something has to give. In practice that means cutting corners and making sacrifices to protect the timeline and the budget. Not because anyone wants to, but because the math doesn't leave room for anything else.
+
+You feel this most in the work you *wanted* to do. The better architecture, the extra feature, the thing that would have made the client's team's life easier. It gets cut, project after project, because there's no room for it in a fixed scope.
+
+## What a platform demands
+
+A platform flips the economics, but it raises the bar.
+
+When you build a platform, every architectural decision affects every client on it, not just one. That forces you to be far more thoughtful about architecture and quality than a one-off project ever lets you be. You can't take the shortcut, because the shortcut ships to everyone.
+
+It changes staffing, too. On a platform, everyone on the team understands its patterns and design. Nobody has to learn a new codebase for every engagement. That makes client-specific customizations faster, and it frees up time for the thoughtful enhancements that never fit inside a project budget.
+
+## Lazy developers make the best developers
+
+There's an old adage that lazy developers make the best developers. The good kind of lazy: refusing to do the same work twice.
+
+That was part of why I built Cairn, our platform for zoos, aquariums and attractions at Aionic. We were tired of building the same things over and over.
+
+But the bigger reason was the work I couldn't deliver. There were features and concepts I wanted to give clients, and we never had the capacity, because every project was being built from scratch or from accelerators. An AI concierge that could answer visitors' questions and help plan a visit was one. Another was the custom apps we build inside CMS platforms, the kind that make an implementation genuinely better for the people using it every day.
+
+Cairn is built once and configured per venue. It has three parts: Flux, the venue's website; Scout, an AI concierge; and Conduit, a single connection to ticketing, membership, donations and food that both the website and Scout share. Because the foundation is already built, the time that used to go into rebuilding plumbing can go into the things I always wanted to give clients.
+
+## Their platform, not ours
+
+One decision I feel strongly about: every venue gets its own deployment. Their data, their infrastructure, and a clear line of ownership.
+
+We could have built one shared system for every venue. It would have been simpler for us. But organizations today are inundated with SaaS, and every new tool is another system they rent and don't control.
+
+I want the opposite. Even though we host Cairn for them, I want each venue to feel like it owns its ecosystem, and to be free to extend it beyond our platform. They should be the drivers of their own destiny, not tenants in ours.
+
+## "But we're unique"
+
+We do hear "we're too unique for a platform" now and then. Usually it's less about uniqueness than fit.
+
+The more common pushback is that we won't have the right connectors, or that a platform won't fit into the ecosystem a client already runs. In reality, that's what adapters and connectors are for. Cairn already works with the headless CMS platforms our clients use, and Conduit exists precisely so a venue can keep the systems it already has.
+
+The other misconception is that a platform is all or nothing. Cairn is modular. A venue can launch the website first and add Scout later, connect its systems through Conduit, or keep the ticketing it already runs. You pick the parts that fit.
+
+## When a platform is the wrong call
+
+I'm a believer, but a platform isn't always the answer. A one-off build is the right call when:
+
+- **The experience is the product.** If being one of a kind is the whole point, as with a flagship brand experience, a platform's shared patterns work against you.
+- **The problem is new.** You can't platform something you've only built once. You need to build it a few times to learn which patterns actually repeat.
+- **Your needs are outside the pattern.** If you don't want a headless CMS, or you're all in on Webflow or Adobe, a headless platform isn't the right fit.
+- **You want to rebuild from the ground up on your own terms.** If you want a different frontend than the platform's, say something other than Next.js, a platform's foundation becomes a constraint rather than a head start.
+
+## The work I always wanted to do
+
+Moving from projects to a platform wasn't about doing less work. It was about doing different work.
+
+A project spends its budget rebuilding the foundation. A platform spends it on everything above the foundation: the concierge, the custom tools, the enhancements that used to get cut. That's the work I always wanted to give clients, and now there's finally room for it.
