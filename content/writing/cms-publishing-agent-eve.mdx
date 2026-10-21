@@ -28,9 +28,9 @@ Here's the important part: **the agent doesn't publish anything. It can't.**
 
 It prepares the content in the CMS and hands it off to the normal review and publishing process. In my implementation, that means it creates or updates the draft and returns a direct link to the entry in Contentful, where someone can review it before it goes live.
 
-![A Slack conversation with CMS Draft Agent. I ask it to add a news article about Penguin Point. It asks me to sign in to Contentful, then replies with a link to the new draft, notes that the photo credit didn't fit a field, and lists the required fields still missing.](/writing/cms-publishing-agent/slack-request.png)
+![A Slack thread with CMS Draft Agent. I ask it to add a news article about Penguin Point. It replies with a link to the new draft, says it left out the photo credit because the content type has no field for it, and lists the required SEO fields still missing.](/writing/cms-publishing-agent/slack-request.png)
 
-*A request in Slack. The agent has me sign in to Contentful, creates the draft, and tells me what it left out and what's still missing.*
+*A request in Slack. The agent creates the draft and tells me what it left out and what's still missing.*
 
 I didn't want to invent a new workflow just because AI was involved. The point was to make the existing workflow more efficient.
 
@@ -79,9 +79,13 @@ Building it turned that balance into a handful of concrete rules:
 
 *The result in Contentful: a draft, saved under my own account, waiting for review.*
 
-![The Penguin Point draft open in the Contentful editor, with its status shown as Draft and the Publish button untouched.](/writing/cms-publishing-agent/contentful-draft-entry.png)
+![The Penguin Point draft in the Contentful editor. The title, the summary and a body containing all three sentences are filled in, the photo credit appears nowhere, and the status is Draft with the Publish button untouched.](/writing/cms-publishing-agent/contentful-draft-entry.png)
 
-*The draft in the editor. The Publish button is still a person's to press.*
+*The draft in the editor. Every sentence made it in, the photo credit didn't, and the Publish button is still a person's to press.*
+
+![Another Slack thread. I ask the agent to add an announcement that winter hours start December 1. It creates the draft and says it left the start date field unset because the request didn't specify a year.](/writing/cms-publishing-agent/slack-no-guessing.png)
+
+*A different request. With no year given, the agent left the start date empty rather than guess.*
 
 To keep myself honest, I turned the hardest of these cases into evals: a request with more information than the content type supports, one missing a required field, an ambiguous content type, an update to an already-published entry, and a multi-sentence draft where every sentence has to survive. Contentful is stubbed with fixtures so the tests are repeatable.
 
