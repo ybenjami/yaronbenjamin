@@ -8,12 +8,12 @@ import { formatDate, getPosts } from '@/lib/posts'
 import { experience, site, themeLabel, themes, upcoming } from '@/lib/site'
 
 const glance = [
-  { value: '20 years', label: 'Web, commerce, loyalty and backend platforms' },
-  { value: 'Engineer to CEO', label: 'Developer, architect, agency director, founder' },
+  { value: '20 years', label: 'Enterprise, commerce, loyalty and content platforms' },
+  { value: 'Composable', label: 'Headless CMS, commerce, search and event-driven backends' },
   { value: 'Hands-on', label: 'Building open-source AI agents today' },
 ]
 
-const otherWork = [
+const otherWork: { kicker: string; title: string; text: string; href?: string; cta?: string }[] = [
   {
     kicker: 'Open source · MIT',
     title: 'CMS publishing agent',
@@ -22,18 +22,14 @@ const otherWork = [
     cta: 'View on GitHub ↗',
   },
   {
-    kicker: 'authentic digital agency',
-    title: 'Brand platforms at scale',
-    text: 'Nine years leading technical delivery of CMS-driven brand sites for clients including Moen, Dice and SPE.',
-    href: '#',
-    cta: '[Case study link]',
+    kicker: 'Composable architecture',
+    title: 'Composable commerce at scale',
+    text: 'Architected composable builds for global retail, entertainment and manufacturing brands on commercetools, Contentful, Sanity and Bloomreach, with Algolia, Elasticsearch, Bynder and Widen. Designed and built the event-driven backends and middle tiers that tie them together.',
   },
   {
-    kicker: 'Localization',
-    title: 'Automated translation in the CMS',
-    text: 'Translation service integrations that publish [number] languages without manual hand-offs.',
-    href: '#',
-    cta: '[Case study link]',
+    kicker: 'Loyalty platform',
+    title: 'Loyalty replatform for a global coffee company',
+    text: 'Architect for the replatforming of a global coffee company\'s loyalty program on Cheetah, Azure and Airship, including an event-driven backend.',
   },
 ]
 
@@ -55,14 +51,15 @@ export default function Home() {
       <Container className="flex flex-wrap items-center gap-16 pb-28 pt-16 md:pt-24">
         <div className="flex min-w-0 flex-[999_1_560px] flex-col gap-7">
           <div className="motion-safe:animate-rise">
-            <PixelLabel accent>CEO · Aionic Digital</PixelLabel>
+            <PixelLabel accent>Architect · Builder</PixelLabel>
           </div>
           <h1 className="title text-[clamp(44px,6vw,84px)] font-semibold leading-[1.02] tracking-[-0.045em] text-white motion-safe:animate-rise [animation-delay:90ms]">
-            Ideas on building web platforms, and the AI that runs on them.
+            I design and build platforms, and write about the decisions behind them.
           </h1>
           <p className="max-w-[620px] text-xl leading-relaxed text-muted motion-safe:animate-rise [animation-delay:180ms]">
-            I&apos;m Yaron, CEO of Aionic Digital and creator of Cairn. Twenty years building for the web, from
-            early CMS platforms to headless architecture and AI agents, and what I&apos;ve learned along the way.
+            I&apos;m Yaron Benjamin, a software architect with twenty years across enterprise, commerce, loyalty and
+            content platforms. I&apos;m also founder and CEO of Aionic Digital, where I put that thinking into practice,
+            most recently in Cairn and in AI agents that work inside real systems.
           </p>
           <div className="flex flex-wrap gap-3 pt-2 motion-safe:animate-rise [animation-delay:270ms]">
             <PillLink href="#writing">Read the writing</PillLink>
@@ -82,7 +79,7 @@ export default function Home() {
           />
           <div className="flex items-center gap-2.5 font-mono text-[13px] text-muted">
             <span aria-hidden="true" className="h-2 w-2 bg-accent motion-safe:animate-blink" />
-            Writing about web platforms and AI
+            Writing about architecture, platforms and AI-native software
           </div>
         </div>
       </Container>
@@ -106,7 +103,7 @@ export default function Home() {
             <SectionHeading
               label="01 / Writing"
               title="Point of view"
-              intro="Four themes I keep coming back to, from the work itself."
+              intro="Engineering decisions, tradeoffs and lessons from real builds."
             />
             {posts.length > 0 && (
               <Link href="/writing" className="text-[15px] font-medium text-white hover:text-accent">
@@ -134,13 +131,14 @@ export default function Home() {
           >
             <div className="flex min-w-0 flex-[999_1_520px] flex-col justify-between gap-6 p-8 md:p-12">
               <div className="flex flex-col gap-4">
-                <MonoLabel accent>My creation · Aionic Digital</MonoLabel>
+                <MonoLabel accent>Platform · Aionic Digital</MonoLabel>
                 <h3 className="title text-3xl font-semibold leading-[1.08] tracking-[-0.035em] text-white md:text-[40px]">
                   Cairn. Built once, stacked for every venue.
                 </h3>
                 <p className="text-lg leading-relaxed text-muted">
-                  I created Cairn, the flagship platform of Aionic Digital: a Next.js website, an AI concierge and one
-                  commerce connection for zoos, aquariums and attractions, deployed as each venue&apos;s own instance.
+                  A platform I created for zoos, aquariums and attractions, built once and configured per venue. Flux,
+                  the Next.js website layer, runs client sites today. Conduit, the commerce connection, is in its first
+                  client deployment. Scout adds an AI concierge built on Eve.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -168,9 +166,11 @@ export default function Home() {
                 <MonoLabel>{w.kicker}</MonoLabel>
                 <h3 className="text-[26px] font-semibold tracking-[-0.03em] text-white">{w.title}</h3>
                 <p className="text-base leading-relaxed text-muted">{w.text}</p>
-                <a href={w.href} className="text-[15px] font-medium text-fg hover:text-white">
-                  {w.cta}
-                </a>
+                {w.href && (
+                  <a href={w.href} className="text-[15px] font-medium text-fg hover:text-white">
+                    {w.cta}
+                  </a>
+                )}
               </Reveal>
             ))}
           </div>

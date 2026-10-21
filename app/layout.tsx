@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'en_US',
     type: 'website',
-    images: [{ url: `/og?title=${encodeURIComponent('Web platforms, and the AI that runs on them')}` }],
+    images: [{ url: `/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}` }],
   },
   twitter: { card: 'summary_large_image' },
   alternates: { types: { 'application/rss+xml': '/rss' } },

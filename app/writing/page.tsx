@@ -5,7 +5,7 @@ import { themeLabel, themes, upcoming } from '@/lib/site'
 
 export const metadata = {
   title: 'Writing',
-  description: 'Essays on web platforms, content operations, AI agents and leading technical teams.',
+  description: 'Essays on architecture and engineering, AI-native software, and building and operating platforms.',
 }
 
 export default function WritingIndex() {
@@ -25,7 +25,7 @@ export default function WritingIndex() {
       <SectionHeading
         label="Writing"
         title="Ideas from the build"
-        intro="On content platforms, AI agents in production, platforms over projects, and leading technical teams."
+        intro="Engineering decisions, tradeoffs and lessons from real builds, across architecture, AI-native software and platforms."
       />
       <WritingList items={items} themes={themes} upcoming={posts.length === 0} />
     </Container>

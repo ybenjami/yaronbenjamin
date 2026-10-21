@@ -15,7 +15,7 @@ export const metadata = {
 const details = [
   { label: 'Role', value: 'Creator and lead engineer, Aionic Digital' },
   { label: 'Stack', value: 'Next.js, Eve, Contentful, Contentstack, Vercel' },
-  { label: 'Status', value: 'Laprade Zoo reference build; first venue deployments underway' },
+  { label: 'Status', value: 'Flux runs client sites; Conduit in its first client deployment' },
 ]
 
 export default function CairnPage() {
