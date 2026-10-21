@@ -38,6 +38,10 @@ But the bigger reason was the work I couldn't deliver. There were features and c
 
 Cairn is built once and configured per venue. It has three parts: Flux, the venue's website; Scout, an AI concierge; and Conduit, a single connection to ticketing, membership, donations and food that both the website and Scout share. Because the foundation is already built, the time that used to go into rebuilding plumbing can go into the things I always wanted to give clients.
 
+I'll be honest about how it started. Flux ships as a set of npm packages, and today those packages are also the fastest way for us to stand up a client site. That's how most platforms begin: as the parts you keep reusing, packaged well enough that you finally stop rebuilding them. The difference from an accelerator is what you do next. An accelerator is a head start you copy and diverge from. A platform is something you keep investing in, so every client benefits from the next improvement.
+
+Scout follows the same logic. We've built several working versions and shown it to a lot of prospective clients, but it has always landed in phase two of a project, after the website. Folding it into Cairn means venues can have it from day one.
+
 ## Their platform, not ours
 
 One decision I feel strongly about: every venue gets its own deployment. Their data, their infrastructure, and a clear line of ownership.

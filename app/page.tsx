@@ -138,7 +138,8 @@ export default function Home() {
                 <p className="text-lg leading-relaxed text-muted">
                   A platform I created for zoos, aquariums and attractions, built once and configured per venue. Flux,
                   the Next.js website layer, runs client sites today. Conduit, the commerce connection, is in its first
-                  client deployment. Scout adds an AI concierge built on Eve.
+                  client deployment. Scout, an AI concierge built on Eve, exists in working versions and is moving into
+                  Cairn so venues have it from day one.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
