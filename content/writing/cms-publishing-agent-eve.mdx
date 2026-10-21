@@ -83,7 +83,9 @@ Building it turned that balance into a handful of concrete rules:
 
 *The draft in the editor. The Publish button is still a person's to press.*
 
-To keep myself honest, I turned the hardest of these cases into evals: a request with more information than the content type supports, one missing a required field, an ambiguous content type, and an update to an already-published entry. Contentful is stubbed with fixtures so the tests are repeatable. All four pass, twelve for twelve across three full runs.
+To keep myself honest, I turned the hardest of these cases into evals: a request with more information than the content type supports, one missing a required field, an ambiguous content type, an update to an already-published entry, and a multi-sentence draft where every sentence has to survive. Contentful is stubbed with fixtures so the tests are repeatable.
+
+The evals keep me honest about the model, too. The ambiguity eval passed nine of ten runs. Once, instead of asking, the agent picked the closest content type. That rule lives in the instructions, and instructions are requests. It's exactly why publishing is blocked in configuration rather than in the prompt: when the model gets a judgment call wrong, the worst outcome is a draft someone fixes, not a live page.
 
 Giving an agent the ability to talk to Contentful is the easy part. Deciding how it should behave when the user's intent and the CMS's constraints don't line up is where most of the engineering actually lives.
 
