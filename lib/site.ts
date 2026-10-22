@@ -33,7 +33,7 @@ export function themeLabel(id?: string) {
 export const upcoming: { title: string; theme: ThemeId }[] = [
   { title: 'Building a CMS publishing agent with Eve and Contentful', theme: 'ai-native' },
   { title: 'Why I stopped building websites and started building platforms', theme: 'platforms' },
-  { title: 'What twenty years of CMS migrations taught me about content models', theme: 'architecture' },
+  { title: 'Content vs. context: what twenty years of CMS migrations taught me about content models', theme: 'architecture' },
 ]
 
 export const experience: { role: string; org: string; href?: string; years: string; note: string }[] = [

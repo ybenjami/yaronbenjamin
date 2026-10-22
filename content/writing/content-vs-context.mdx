@@ -1,0 +1,115 @@
+---
+title: 'Content vs. context: what twenty years of CMS migrations taught me about content models'
+publishedAt: '2026-11-15'
+summary: 'A content model consumers can rely on, built for reuse, and never lifted and shifted without vetting. Plus the modeling mistake that quietly kills reuse.'
+theme: 'architecture'
+draft: true
+---
+
+CMS work has followed me through my entire career, from the Department of Defense to the agency years to Aionic. Over that time I've migrated a lot of content between a lot of systems, and the hardest lessons were rarely about the CMS itself.
+
+## Migrations are never just about content
+
+The hardest migrations are the ones where several systems change at once.
+
+On one CMS and web application rebuild, my team owned the frontend and the middle tier while the client replaced their backend in parallel. The backend kept changing, and every change rippled into the middle tier. Worse, we couldn't count on the new backend being ready when we needed it, so parts of the frontend had to support the legacy backend in the meantime. That meant two different UX and process flows, and the new flow kept changing during development.
+
+We engineered around it with versioning from the start. The application could be configured per feature to run against a specific backend version. It had to be per feature rather than one global switch, because a single feature flow often touched several endpoints.
+
+We went live a little late, but the launch was a success. Then something I didn't anticipate happened: because the frontend worked, the client delayed version two of their backend. We ended up supporting the legacy V1 backend far longer than planned, patching V1 issues and often mirroring those changes into V2.
+
+The compatibility layer worked so well that it removed the pressure to finish the migration. Temporary support became long-term dual maintenance.
+
+The lesson I took from it wasn't technical. I had raised these concerns at the start of the project and foresaw most of the problems we hit. But when the client said no, I didn't push them to reconsider. There are times as a leader when you have to draw a line and insist. That was one of them.
+
+## Rule one: a CMS can't be a Plinko board
+
+The biggest problem I see in content models, by far, is unpredictability.
+
+You drop content in the top and have no idea where it lands. Content types have fields that never render on the frontend. Context configuration sits in a content type and doesn't seem to affect the page. An editor types into a field, expects it to show up, and it doesn't.
+
+Every content model I design has to be one its consumers can rely on to work the way they expect. That applies to editors, to developers, and increasingly to agents. If a field exists, it should do something visible and predictable. If it doesn't, it shouldn't be there.
+
+## Rule two: separate content from context
+
+The second most common mistake is the one that quietly kills reuse: no clear separation between content and context.
+
+Take a simple Banner type with a title, subtitle, image and copy. It looks reasonable. But the moment it's called a banner, that title, image and copy are locked into being a banner. When marketing wants the same message as a promo card, someone recreates it, and now there are two copies to keep in sync.
+
+The fix is to pull the pure content out into its own type and reference it from a context type. The context type describes how the content should be presented: variant, text on the left or right, theme, display type. The content stays pure, and the same content can be referenced by a banner, a promo card or anything else.
+
+On the delivery side, a backend-for-frontend (BFF) brings the two together. It takes the content and the context, ideally as separate blocks, and resolves them into props for a component that doesn't need to know anything about the CMS. Here's a simplified sketch of the idea:
+
+```ts
+// What the CMS returns: pure content, plus context that references it.
+const block = {
+  content: {
+    title: 'Penguin Point reopens Dec 6',
+    subtitle: 'After a fall refresh',
+    image: { url: '/images/penguins.jpg', alt: 'African penguins' },
+    copy: 'Feeding talks run daily at 2pm.',
+  },
+  context: {
+    type: 'banner',
+    variant: 'hero',
+    textPosition: 'left',
+    theme: 'dark',
+    displayType: 'full-width',
+  },
+}
+
+// The BFF resolves content + context into props for a simple component.
+function toBannerProps({ content, context }: typeof block) {
+  return {
+    heading: content.title,
+    subheading: content.subtitle,
+    image: content.image,
+    body: content.copy,
+    variant: context.variant,
+    textPosition: context.textPosition,
+    theme: context.theme,
+  }
+}
+```
+
+The same `content` could feed a promo card with its own context and its own props function. Nothing about the message is duplicated.
+
+This separation is also my second non-negotiable: the model has to support reuse and findability. You can't reuse what you can't find, and you can't find content that's buried inside presentation.
+
+## Ultimate flexibility is a trap
+
+The opposite failure is over-engineering for every "what if." It happens when requirements are defined too strictly, and just as often when they're too loose.
+
+A model built for ultimate flexibility ends up with many fields that are rarely filled in, and you're back to the Plinko board. Worse, the team ends up needing a set of unwritten rules about how to treat the content: which fields to use together, which to ignore, which combinations actually work. Once a content model needs a manual to be used safely, it has stopped doing its job.
+
+## Rule three: never lift and shift without vetting
+
+This one is a little taboo, because it usually comes up as a way to save money. I will never allow a lift and shift of a content model in a migration without vetting the model first.
+
+The problem is twofold.
+
+First, content models don't map cleanly between CMS platforms. Forcing one platform's model onto another is a disaster waiting to happen.
+
+Second, think about why the migration is happening. Many CMS projects start because the current platform no longer supports the business. Over the years, the legacy platform has accumulated inefficient workflows, ones that could be fixed if they were re-architected. Why would we lift and shift those problems into the new system?
+
+At best, a lift and shift replicates the old inefficiencies on a new platform. In practice it's worse: editors are now working around the same problems in an interface they don't know yet.
+
+## How I vet a content model
+
+A few litmus tests tell me quickly whether a model needs real rework before it moves anywhere.
+
+**Reference hell.** If I have to follow references several layers deep to assemble one piece of content, I start asking questions. Deep nesting usually means structure is compensating for a missing concept.
+
+**Everything looks like context.** If most content types describe presentation rather than content, the CMS was likely being used as a page builder, not a content platform. That's a signal to dig much deeper before migrating anything.
+
+## What agents change
+
+Agents raise the stakes on all of this.
+
+In my experience, agents are actually pretty good at telling content from context once they're looking at it. The real problem is discovery: getting the agent to find the right content in the first place. When pure content is nested inside context types, it's harder to discover, and harder to retrieve cleanly.
+
+A content model with clean separation gives an agent clean context, without presentation details interfering. The same discipline that makes content reusable for people makes it usable by agents.
+
+## The model is the product
+
+Twenty years of migrations have convinced me that the content model matters more than the platform it lives on. Platforms change. A well-modeled body of content can survive every one of those changes. A poorly modeled one carries its problems from system to system, no matter how modern the new CMS is.
