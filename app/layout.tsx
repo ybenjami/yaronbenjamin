@@ -1,6 +1,6 @@
 import './global.css'
 import '@fontsource/silkscreen/400.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
 import { Analytics } from '@vercel/analytics/react'
@@ -26,6 +26,8 @@ export const metadata: Metadata = {
   alternates: { types: { 'application/rss+xml': '/rss' } },
   robots: { index: true, follow: true },
 }
+
+export const viewport: Viewport = { themeColor: '#0a0a0a', colorScheme: 'dark' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
