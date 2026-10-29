@@ -43,7 +43,11 @@ export function getPosts(): Post[] {
       return { slug: file.replace(/\.mdx$/, ''), metadata: metadata as PostMeta, content }
     })
     .filter((p) => showDrafts || !p.metadata.draft)
-    .sort((a, b) => (new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt) ? -1 : 1))
+    .sort(
+      (a, b) =>
+        new Date(b.metadata.publishedAt).getTime() - new Date(a.metadata.publishedAt).getTime() ||
+        a.slug.localeCompare(b.slug)
+    )
 }
 
 export function formatDate(date: string) {

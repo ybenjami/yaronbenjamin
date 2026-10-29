@@ -1,3 +1,5 @@
+import fs from 'fs'
+import path from 'path'
 import { site } from '@/lib/site'
 import { Container } from './ui'
 
@@ -6,8 +8,12 @@ const links = [
   { href: site.links.linkedin, label: 'LinkedIn' },
   { href: site.links.github, label: 'GitHub' },
   { href: '/rss', label: 'RSS' },
-  { href: site.links.resume, label: 'Résumé' },
 ]
+
+// The Résumé link appears once public/resume.pdf exists.
+if (fs.existsSync(path.join(process.cwd(), 'public', 'resume.pdf'))) {
+  links.push({ href: site.links.resume, label: 'Résumé' })
+}
 
 export function Footer() {
   return (

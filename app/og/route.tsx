@@ -35,7 +35,7 @@ export function GET(request: Request) {
         <div style={{ display: 'flex', fontSize: 72, fontWeight: 600, letterSpacing: -3, lineHeight: 1.05, maxWidth: 1000 }}>
           {title}
         </div>
-        <div style={{ display: 'flex', fontSize: 28, color: '#a1a1a1' }}>Yaron Benjamin · CEO, Aionic Digital</div>
+        <div style={{ display: 'flex', fontSize: 28, color: '#a1a1a1' }}>Yaron Benjamin · Software architect · Founder, Aionic Digital</div>
       </div>
     ),
     { width: 1200, height: 630 }

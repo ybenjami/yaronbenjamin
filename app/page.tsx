@@ -13,13 +13,15 @@ const glance = [
   { value: 'Hands-on', label: 'Building open-source AI agents today' },
 ]
 
-const otherWork: { kicker: string; title: string; text: string; href?: string; cta?: string }[] = [
+const otherWork: { kicker: string; title: string; text: string; links?: { href: string; label: string }[] }[] = [
   {
     kicker: 'Open source · MIT',
     title: 'CMS publishing agent',
     text: 'An Eve agent that turns plain-language requests into draft entries in Contentful, from Slack or a terminal. It can\'t publish: a person always makes that call.',
-    href: 'https://github.com/ybenjami/cms-publishing-agent',
-    cta: 'View on GitHub ↗',
+    links: [
+      { href: '/writing/cms-publishing-agent-eve', label: 'Read the post →' },
+      { href: 'https://github.com/ybenjami/cms-publishing-agent', label: 'View on GitHub ↗' },
+    ],
   },
   {
     kicker: 'Composable architecture',
@@ -63,8 +65,8 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap gap-3 pt-2 motion-safe:animate-rise [animation-delay:270ms]">
             <PillLink href="#writing">Read the writing</PillLink>
-            <PillLink href="/work/cairn" variant="secondary">
-              How I built Cairn
+            <PillLink href="#work" variant="secondary">
+              See the work
             </PillLink>
           </div>
         </div>
@@ -125,10 +127,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal delay={100}>
-          <Link
-            href="/work/cairn"
-            className="group flex flex-wrap overflow-hidden rounded-[28px] border border-line bg-surface transition-[border-color,transform] duration-300 hover:-translate-y-0.5 hover:border-line-strong"
-          >
+          <div className="group flex flex-wrap overflow-hidden rounded-[28px] border border-line bg-surface transition-colors duration-300 hover:border-line-strong">
             <div className="flex min-w-0 flex-[999_1_520px] flex-col justify-between gap-6 p-8 md:p-12">
               <div className="flex flex-col gap-4">
                 <MonoLabel accent>Platform · Aionic Digital</MonoLabel>
@@ -136,10 +135,10 @@ export default function Home() {
                   Cairn. Built once, stacked for every venue.
                 </h3>
                 <p className="text-lg leading-relaxed text-muted">
-                  A platform I created for zoos, aquariums and attractions, built once and configured per venue. Flux,
-                  the Next.js website layer, runs client sites today. Conduit, the commerce connection, is in its first
-                  client deployment. Scout, an AI concierge built on Eve, exists in working versions and is moving into
-                  Cairn so venues have it from day one.
+                  A platform I created for zoos, aquariums and attractions: the website, the commerce connection and
+                  an AI concierge, configured per venue instead of rebuilt for each one. It grew out of client work.
+                  Flux, the Next.js website layer, packages code that already runs on sites Aionic has shipped. Scout,
+                  the concierge, is built on Eve.
                 </p>
               </div>
               <div className="flex flex-wrap gap-2">
@@ -147,14 +146,23 @@ export default function Home() {
                   <Tag key={t}>{t}</Tag>
                 ))}
               </div>
-              <div className="font-medium text-white">
-                Read the case study <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                <span className="flex items-center gap-2.5 font-mono text-[13px] text-muted">
+                  <span aria-hidden="true" className="h-2 w-2 bg-accent" />
+                  Now working with founding venues
+                </span>
+                <a
+                  href={`mailto:${site.email}?subject=${encodeURIComponent('Cairn founding venue')}`}
+                  className="font-medium text-white hover:text-accent"
+                >
+                  Become a founding venue <span className="inline-block transition-transform group-hover:translate-x-1">→</span>
+                </a>
               </div>
             </div>
             <div className="flex min-h-[320px] flex-[1_1_380px] items-center justify-center border-line bg-ink max-[979px]:border-t min-[980px]:border-l">
               <PixelCairn width={224} className="transition-transform duration-500 group-hover:-translate-y-1" />
             </div>
-          </Link>
+          </div>
           </Reveal>
 
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
@@ -167,10 +175,14 @@ export default function Home() {
                 <MonoLabel>{w.kicker}</MonoLabel>
                 <h3 className="text-[26px] font-semibold tracking-[-0.03em] text-white">{w.title}</h3>
                 <p className="text-base leading-relaxed text-muted">{w.text}</p>
-                {w.href && (
-                  <a href={w.href} className="text-[15px] font-medium text-fg hover:text-white">
-                    {w.cta}
-                  </a>
+                {w.links && (
+                  <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-1">
+                    {w.links.map((l) => (
+                      <a key={l.href} href={l.href} className="text-[15px] font-medium text-fg hover:text-accent">
+                        {l.label}
+                      </a>
+                    ))}
+                  </div>
                 )}
               </Reveal>
             ))}
@@ -228,7 +240,12 @@ export default function Home() {
                 Want to trade ideas, or build something together?
               </h2>
             </div>
-            <PillLink href={`mailto:${site.email}`}>{site.email}</PillLink>
+            <div className="flex flex-col items-start gap-3">
+              <PillLink href={`mailto:${site.email}`}>{site.email}</PillLink>
+              <a href={site.links.aionic} className="px-1 text-[15px] text-muted hover:text-white">
+                Project work? Aionic Digital ↗
+              </a>
+            </div>
           </Reveal>
         </Container>
       </section>

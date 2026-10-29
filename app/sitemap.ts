@@ -3,7 +3,7 @@ import { site } from '@/lib/site'
 
 export default function sitemap() {
   const today = new Date().toISOString().split('T')[0]
-  const routes = ['', '/writing', '/work/cairn'].map((route) => ({
+  const routes = ['', '/writing'].map((route) => ({
     url: `${site.url}${route}`,
     lastModified: today,
   }))

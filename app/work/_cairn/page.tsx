@@ -8,14 +8,14 @@ import { site } from '@/lib/site'
 
 export const metadata = {
   title: 'Cairn case study',
-  description: 'How I created Cairn, the flagship platform of Aionic Digital, for zoos, aquariums and attractions.',
+  description: 'How I created Cairn, a platform from Aionic Digital for zoos, aquariums and attractions.',
   openGraph: { images: [{ url: `/og?title=${encodeURIComponent('Cairn: built once, stacked for every venue')}` }] },
 }
 
 const details = [
   { label: 'Role', value: 'Creator and lead engineer, Aionic Digital' },
   { label: 'Stack', value: 'Next.js, Eve, Contentful, Contentstack, Vercel' },
-  { label: 'Status', value: 'Flux runs client sites; Conduit in its first client deployment; Scout in working versions, not yet in production' },
+  { label: 'Status', value: 'Working with founding venues' },
 ]
 
 export default function CairnPage() {
@@ -34,8 +34,7 @@ export default function CairnPage() {
         </h1>
         <p className="max-w-[720px] text-xl leading-relaxed text-muted md:text-[21px]">
           Zoos, aquariums and gardens each rebuild the same website, ticketing links and visitor help from scratch. I
-          created Cairn so they wouldn&apos;t have to: one platform, configured per venue, and now the flagship of Aionic
-          Digital.
+          created Cairn so they wouldn&apos;t have to: one platform, configured per venue.
         </p>
       </Container>
 
@@ -74,7 +73,7 @@ export default function CairnPage() {
           <div className="flex min-w-0 flex-[999_1_480px] flex-col gap-4">
             <PixelLabel accent>Next</PixelLabel>
             <h2 className="title text-[clamp(32px,4vw,48px)] font-semibold leading-[1.08] tracking-[-0.04em] text-white">
-              The first venue deployments are underway. More are next.
+              Now working with founding venues.
             </h2>
           </div>
           <div className="flex flex-wrap gap-3">
