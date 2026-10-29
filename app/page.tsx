@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { PixelCairn } from '@/components/pixel-cairn'
 import { Reveal } from '@/components/reveal'
 import { Container, MonoLabel, PillLink, PixelLabel, SectionHeading, Tag } from '@/components/ui'
 import { WritingList } from '@/components/writing-list'
@@ -159,9 +158,19 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className="flex min-h-[320px] flex-[1_1_380px] items-center justify-center border-line bg-ink max-[979px]:border-t min-[980px]:border-l">
-              <PixelCairn width={224} className="transition-transform duration-500 group-hover:-translate-y-1" />
-            </div>
+            <figure className="flex flex-[1_1_380px] flex-col items-center justify-center gap-4 border-line bg-ink p-6 max-[979px]:border-t min-[980px]:border-l md:p-8">
+              <Image
+                src="/cairn/laprade-scout.jpg"
+                alt="Laprade Zoo, a demo venue, with Scout open as WildGuide, offering a guest a Kids Zoo Admission ticket"
+                width={1500}
+                height={1573}
+                sizes="(min-width: 980px) 460px, 100vw"
+                className="h-auto w-full max-w-[520px] transition-transform duration-500 group-hover:-translate-y-1"
+              />
+              <figcaption className="text-center font-mono text-xs text-subtle">
+                Laprade Zoo, a demo venue, with Scout branded as WildGuide
+              </figcaption>
+            </figure>
           </div>
           </Reveal>
 
