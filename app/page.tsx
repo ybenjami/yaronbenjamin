@@ -44,14 +44,12 @@ const otherWork: WorkCard[] = [
   {
     kicker: 'Composable architecture',
     title: 'Composable commerce at scale',
-    text: 'Architected composable builds for global retail, entertainment and manufacturing brands on commercetools, Contentful, Sanity and Bloomreach, with Algolia, Elasticsearch, Bynder and Widen. Designed and built the event-driven backends and middle tiers that tie them together.',
-    todo: 'one scale metric for these builds, such as peak traffic, orders or transactions',
+    text: 'Architected composable builds for global retail, entertainment and manufacturing brands on commercetools, Contentful, Sanity and Bloomreach, with Algolia, Elasticsearch, Bynder and Widen. Designed and built the event-driven backends and middle tiers that tie them together, including commerce for a multi-park entertainment brand handling millions of transactions.',
   },
   {
     kicker: 'Loyalty platform',
-    title: 'Loyalty replatform for a global coffee company',
-    text: 'Architect for the replatforming of a global coffee company\'s loyalty program on Cheetah, Azure and Airship, including an event-driven backend.',
-    todo: 'loyalty program member count',
+    title: 'Loyalty platforms at scale',
+    text: 'Architected loyalty platforms supporting 5 to 7 million members, on Cheetah, Azure and Airship, including event-driven backends.',
   },
   {
     // Hidden until Yaron says it's ready.
