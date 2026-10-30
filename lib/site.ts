@@ -48,11 +48,7 @@ export const experience: { role: string; org: string; href?: string; years: stri
     role: 'Senior Architect → Director of Technical Services',
     org: 'Authentic Digital',
     years: '2015 – 2024',
-    note: 'Architected composable commerce, CMS and loyalty platforms for global brands, including event-driven backends and middle tiers. Promoted to lead technical services across every client project, while staying architect on the largest. Led technical services through the company\'s acquisition by Concord (an H.I.G. Capital portfolio company) in 2023.',
-    todo: [
-      'size of the team you led as Director (earlier you said "more than 60" for the résumé)',
-      'number of client brands you architected for or led delivery on',
-    ],
+    note: 'Architected composable commerce, CMS and loyalty platforms for global brands, including event-driven backends and middle tiers. Promoted to lead technical services, a team of 60+ across projects for 20+ client brands, while staying architect on the largest. Led technical services through the company\'s acquisition by Concord (an H.I.G. Capital portfolio company) in 2023.',
   },
   {
     role: 'Sr. IT Analyst',
