@@ -85,3 +85,13 @@ export function Placeholder({ label, className = '' }: { label: string; classNam
     </div>
   )
 }
+
+// Marks a fact still to be filled in. Shows in `npm run dev`, renders nothing in production.
+export function Todo({ children }: { children: React.ReactNode }) {
+  if (process.env.NODE_ENV === 'production') return null
+  return (
+    <span className="mt-2 block rounded-lg border border-dashed border-accent px-3 py-2 font-mono text-xs text-accent">
+      [TODO: {children}]
+    </span>
+  )
+}

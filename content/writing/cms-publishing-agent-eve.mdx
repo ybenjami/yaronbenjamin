@@ -41,7 +41,7 @@ The agent handles the repetitive work. The editorial controls that already exist
 
 When I connected the agent to Contentful's hosted MCP server, it exposed 85 tools. That includes publishing, deleting entries and changing environments, and nothing on the server side filtered them out for me.
 
-So I didn't rely on instructions telling the agent not to publish. Eve lets a connection expose an allow-list of tools, and mine exposes eight: enough to read the content model, search and read entries, and create or update drafts. Publishing, unpublishing and deleting simply aren't available to it.
+So I didn't rely on instructions telling the agent not to publish. [Eve](https://eve.dev), Vercel's open-source framework for building AI agents, lets a connection expose an allow-list of tools, and mine exposes eight: enough to read the content model, search and read entries, and create or update drafts. Publishing, unpublishing and deleting simply aren't available to it.
 
 I also pinned the space and environment in configuration, so the model never chooses where it writes. It works in a sandbox environment, and there's no parameter it can change to point somewhere else. Each person signs in to Contentful with their own account, so the agent works within their permissions rather than a shared key.
 

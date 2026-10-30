@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     type: 'website',
     images: [{ url: `/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}` }],
   },
-  twitter: { card: 'summary_large_image' },
+  twitter: { card: 'summary_large_image', images: [`/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}`] },
   alternates: { types: { 'application/rss+xml': '/rss' } },
   robots: { index: true, follow: true },
 }

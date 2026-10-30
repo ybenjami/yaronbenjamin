@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { Reveal } from '@/components/reveal'
-import { Container, MonoLabel, PillLink, PixelLabel, SectionHeading, Tag } from '@/components/ui'
+import { Container, MonoLabel, PillLink, PixelLabel, SectionHeading, Tag, Todo } from '@/components/ui'
 import { WritingList } from '@/components/writing-list'
 import { formatDate, getPosts } from '@/lib/posts'
 import { experience, site, themeLabel, themes, upcoming } from '@/lib/site'
@@ -12,11 +12,30 @@ const glance = [
   { value: 'Hands-on', label: 'Building open-source AI agents today' },
 ]
 
-const otherWork: { kicker: string; title: string; text: string; links?: { href: string; label: string }[] }[] = [
+type WorkCard = {
+  kicker: string
+  title: string
+  text: React.ReactNode
+  links?: { href: string; label: string }[]
+  todo?: string
+  hidden?: boolean // keeps a card in the code but off the page until it's ready
+}
+
+const otherWork: WorkCard[] = [
   {
     kicker: 'Open source · MIT',
     title: 'CMS publishing agent',
-    text: 'An Eve agent that turns plain-language requests into draft entries in Contentful, from Slack or a terminal. It can\'t publish: a person always makes that call.',
+    text: (
+      <>
+        An agent that turns plain-language requests into draft entries in Contentful, from Slack or a terminal. Built
+        on{' '}
+        <a href="https://eve.dev" className="underline decoration-line-strong underline-offset-4 hover:text-white">
+          eve
+        </a>
+        , Vercel&apos;s open-source framework for building AI agents. It can&apos;t publish: a person always makes that
+        call.
+      </>
+    ),
     links: [
       { href: '/writing/cms-publishing-agent-eve', label: 'Read the post →' },
       { href: 'https://github.com/ybenjami/cms-publishing-agent', label: 'View on GitHub ↗' },
@@ -26,11 +45,21 @@ const otherWork: { kicker: string; title: string; text: string; links?: { href: 
     kicker: 'Composable architecture',
     title: 'Composable commerce at scale',
     text: 'Architected composable builds for global retail, entertainment and manufacturing brands on commercetools, Contentful, Sanity and Bloomreach, with Algolia, Elasticsearch, Bynder and Widen. Designed and built the event-driven backends and middle tiers that tie them together.',
+    todo: 'one scale metric for these builds, such as peak traffic, orders or transactions',
   },
   {
     kicker: 'Loyalty platform',
     title: 'Loyalty replatform for a global coffee company',
     text: 'Architect for the replatforming of a global coffee company\'s loyalty program on Cheetah, Azure and Airship, including an event-driven backend.',
+    todo: 'loyalty program member count',
+  },
+  {
+    // Hidden until Yaron says it's ready.
+    kicker: 'Reference architecture',
+    title: 'Vercel + Salesforce Commerce Cloud reference storefront',
+    text: 'TODO: description, stack and status.',
+    todo: 'write this card, add a link, then remove hidden: true',
+    hidden: true,
   },
 ]
 
@@ -175,7 +204,7 @@ export default function Home() {
           </Reveal>
 
           <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
-            {otherWork.map((w, i) => (
+            {otherWork.filter((w) => !w.hidden).map((w, i) => (
               <Reveal
                 key={w.title}
                 delay={i * 90}
@@ -184,6 +213,7 @@ export default function Home() {
                 <MonoLabel>{w.kicker}</MonoLabel>
                 <h3 className="text-[26px] font-semibold tracking-[-0.03em] text-white">{w.title}</h3>
                 <p className="text-base leading-relaxed text-muted">{w.text}</p>
+                {w.todo && <Todo>{w.todo}</Todo>}
                 {w.links && (
                   <div className="mt-auto flex flex-wrap gap-x-5 gap-y-2 pt-1">
                     {w.links.map((l) => (
@@ -230,6 +260,7 @@ export default function Home() {
                     )}
                   </div>
                   <p className="mt-1.5 max-w-[560px] text-[15px] leading-relaxed text-subtle">{e.note}</p>
+                  {e.todo?.map((t) => <Todo key={t}>{t}</Todo>)}
                 </div>
                 <div className="font-mono text-sm text-subtle">{e.years}</div>
               </li>
