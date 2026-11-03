@@ -198,7 +198,7 @@ export default function Home() {
                   Now working with founding venues
                 </span>
                 <a
-                  href={`mailto:${site.email}?subject=${encodeURIComponent('Cairn founding venue')}`}
+                  href={`mailto:${site.cairnEmail}?subject=${encodeURIComponent('Cairn founding venue')}`}
                   className="font-medium text-white hover:text-accent"
                 >
                   Become a founding venue <span className="inline-block transition-transform group-hover:translate-x-1">→</span>

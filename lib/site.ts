@@ -6,7 +6,8 @@ export const site = {
   description:
     'Yaron Benjamin is a software architect who designs and builds platforms, and writes about the decisions behind them. Founder and CEO of Aionic Digital.',
   url: 'https://yaronbenjamin.com',
-  email: 'ybenjami@gmail.com',
+  email: 'yaron@yaronbenjamin.com',
+  cairnEmail: 'yaron@aionicdigital.com',
   links: {
     aionic: 'https://aionicdigital.com',
     linkedin: 'https://www.linkedin.com/in/ybenjami',
