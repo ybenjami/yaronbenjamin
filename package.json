@@ -22,7 +22,7 @@
     "next-mdx-remote": "^6.0.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "sugar-high": "^0.9.0"
+    "sugar-high": "^2.6.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
