@@ -6,12 +6,13 @@ import { themeLabel, themes, upcoming } from '@/lib/site'
 export const metadata = {
   title: 'Writing',
   description: 'Essays on architecture and engineering, AI-native software, and building and operating platforms.',
+  alternates: { canonical: '/writing' },
   openGraph: {
     title: 'Writing — Yaron Benjamin',
     description: 'Essays on architecture and engineering, AI-native software, and building and operating platforms.',
     url: '/writing',
-    images: [{ url: `/og?title=${encodeURIComponent('Ideas from the build')}` }],
   },
+  twitter: { card: 'summary_large_image' },
 }
 
 export default function WritingIndex() {

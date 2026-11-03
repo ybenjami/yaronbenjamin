@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Reveal } from '@/components/reveal'
@@ -5,6 +6,10 @@ import { Container, MonoLabel, PillLink, PixelLabel, SectionHeading, Tag, Todo }
 import { WritingList } from '@/components/writing-list'
 import { formatDate, getPosts } from '@/lib/posts'
 import { experience, site, themeLabel, themes, upcoming } from '@/lib/site'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 const glance = [
   { value: '20 years', label: 'Enterprise, commerce, loyalty and content platforms' },
@@ -30,7 +35,7 @@ const otherWork: WorkCard[] = [
         An agent that turns plain-language requests into draft entries in Contentful, from Slack or a terminal. Built
         on{' '}
         <a href="https://eve.dev" className="underline decoration-line-strong underline-offset-4 hover:text-white">
-          eve
+          Eve
         </a>
         , Vercel&apos;s open-source framework for building AI agents. It can&apos;t publish: a person always makes that
         call.
@@ -49,7 +54,7 @@ const otherWork: WorkCard[] = [
   {
     kicker: 'Loyalty platform',
     title: 'Loyalty platforms at scale',
-    text: 'Architected loyalty platforms supporting 5 to 7 million members, on Cheetah, Azure and Airship, including event-driven backends.',
+    text: 'Architected loyalty platforms supporting more than 5 million members, on Cheetah, Azure and Airship, including event-driven backends.',
   },
   {
     // Hidden until Yaron says it's ready.
@@ -75,6 +80,21 @@ export default function Home() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        suppressHydrationWarning
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'Person',
+            name: 'Yaron Benjamin',
+            jobTitle: 'Software Architect; Founder & CEO, Aionic Digital',
+            url: site.url,
+            worksFor: { '@type': 'Organization', name: 'Aionic Digital', url: site.links.aionic },
+            sameAs: [site.links.linkedin, site.links.github],
+          }),
+        }}
+      />
       {/* Hero */}
       <Container className="flex flex-wrap items-center gap-16 pb-28 pt-16 md:pt-24">
         <div className="flex min-w-0 flex-[999_1_560px] flex-col gap-7">

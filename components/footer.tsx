@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import { site } from '@/lib/site'
+import { Subscribe } from './subscribe'
 import { Container } from './ui'
 
 const links = [
@@ -18,6 +19,9 @@ if (fs.existsSync(path.join(process.cwd(), 'public', 'resume.pdf'))) {
 export function Footer() {
   return (
     <footer>
+      <Container className="pt-8">
+        <Subscribe label="Get new posts by email." />
+      </Container>
       <Container className="flex flex-wrap justify-between gap-4 pb-12 pt-8 text-sm text-subtle">
         <div>© {new Date().getFullYear()} Yaron Benjamin · Built with Next.js on Vercel</div>
         <div className="flex flex-wrap gap-6">

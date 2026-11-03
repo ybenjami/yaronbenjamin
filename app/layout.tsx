@@ -25,6 +25,8 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', images: [`/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}`] },
   alternates: { types: { 'application/rss+xml': '/rss' } },
   robots: { index: true, follow: true },
+  // Add your Google Search Console verification code here once the domain is live.
+  verification: { google: '' },
 }
 
 export const viewport: Viewport = { themeColor: '#0a0a0a', colorScheme: 'dark' }

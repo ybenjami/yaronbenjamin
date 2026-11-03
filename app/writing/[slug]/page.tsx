@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { CustomMDX } from '@/components/mdx'
+import { Subscribe } from '@/components/subscribe'
 import { Container } from '@/components/ui'
 import { formatDate, getPosts } from '@/lib/posts'
 import { site, themeLabel } from '@/lib/site'
@@ -17,13 +18,13 @@ export async function generateMetadata({ params }: Props) {
   const { slug } = await params
   const post = getPosts().find((p) => p.slug === slug)
   if (!post) return {}
-  const { title, summary, publishedAt, image } = post.metadata
-  const ogImage = image ?? `/og?title=${encodeURIComponent(title)}`
+  const { title, summary, publishedAt } = post.metadata
   return {
     title,
     description: summary,
-    openGraph: { title, description: summary, type: 'article', publishedTime: publishedAt, url: `${site.url}/writing/${slug}`, images: [{ url: ogImage }] },
-    twitter: { card: 'summary_large_image', title, description: summary, images: [ogImage] },
+    alternates: { canonical: `/writing/${slug}` },
+    openGraph: { title, description: summary, type: 'article', publishedTime: publishedAt, url: `/writing/${slug}` },
+    twitter: { card: 'summary_large_image', title, description: summary },
   }
 }
 
@@ -43,10 +44,11 @@ export default async function PostPage({ params }: Props) {
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
             headline: title,
-            datePublished: publishedAt,
             description: summary,
+            datePublished: publishedAt,
             url: `${site.url}/writing/${slug}`,
-            author: { '@type': 'Person', name: site.name },
+            image: `${site.url}/writing/${slug}/opengraph-image`,
+            author: { '@type': 'Person', name: site.name, url: site.url },
           }),
         }}
       />
@@ -67,6 +69,9 @@ export default async function PostPage({ params }: Props) {
         </header>
         <div className="prose">
           <CustomMDX source={post.content} />
+        </div>
+        <div className="mt-16">
+          <Subscribe label="Enjoyed this? Get new posts by email." />
         </div>
       </article>
     </Container>
