@@ -1,6 +1,7 @@
 .next/
 node_modules/
 public/
+.claude/
 *.md
 tsconfig.tsbuildinfo
 package-lock.json
