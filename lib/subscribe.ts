@@ -3,4 +3,4 @@
 export const subscribeConfig = {
   enabled: false,
   buttondownUsername: '', // e.g. 'yaronbenjamin'
-} as const
+} as const;

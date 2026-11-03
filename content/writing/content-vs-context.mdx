@@ -55,7 +55,7 @@ const block = {
     theme: 'dark',
     displayType: 'full-width',
   },
-}
+};
 
 // The BFF resolves content + context into props for a simple component.
 function toBannerProps({ content, context }: typeof block) {
@@ -67,7 +67,7 @@ function toBannerProps({ content, context }: typeof block) {
     variant: context.variant,
     textPosition: context.textPosition,
     theme: context.theme,
-  }
+  };
 }
 ```
 

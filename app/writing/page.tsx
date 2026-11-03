@@ -1,22 +1,24 @@
-import { Container, SectionHeading } from '@/components/ui'
-import { WritingList } from '@/components/writing-list'
-import { formatDate, getPosts } from '@/lib/posts'
-import { themeLabel, themes, upcoming } from '@/lib/site'
+import { Container, SectionHeading } from '@/components/ui';
+import { WritingList } from '@/components/writing-list';
+import { formatDate, getPosts } from '@/lib/posts';
+import { themeLabel, themes, upcoming } from '@/lib/site';
 
 export const metadata = {
   title: 'Writing',
-  description: 'Essays on architecture and engineering, AI-native software, and building and operating platforms.',
+  description:
+    'Essays on architecture and engineering, AI-native software, and building and operating platforms.',
   alternates: { canonical: '/writing' },
   openGraph: {
     title: 'Writing — Yaron Benjamin',
-    description: 'Essays on architecture and engineering, AI-native software, and building and operating platforms.',
+    description:
+      'Essays on architecture and engineering, AI-native software, and building and operating platforms.',
     url: '/writing',
   },
   twitter: { card: 'summary_large_image' },
-}
+};
 
 export default function WritingIndex() {
-  const posts = getPosts()
+  const posts = getPosts();
   const items = posts.length
     ? posts.map((p) => ({
         slug: p.slug,
@@ -25,10 +27,10 @@ export default function WritingIndex() {
         themeLabel: themeLabel(p.metadata.theme),
         date: formatDate(p.metadata.publishedAt),
       }))
-    : upcoming.map((u) => ({ title: u.title, theme: u.theme, themeLabel: themeLabel(u.theme) }))
+    : upcoming.map((u) => ({ title: u.title, theme: u.theme, themeLabel: themeLabel(u.theme) }));
 
   return (
-    <Container className="flex flex-col gap-12 pb-24 pt-16 md:pt-24">
+    <Container className="flex flex-col gap-12 pt-16 pb-24 md:pt-24">
       <SectionHeading
         label="Writing"
         title="Ideas from the build"
@@ -36,5 +38,5 @@ export default function WritingIndex() {
       />
       <WritingList items={items} themes={themes} upcoming={posts.length === 0} />
     </Container>
-  )
+  );
 }

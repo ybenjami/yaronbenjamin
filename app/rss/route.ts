@@ -1,8 +1,8 @@
-import { getPosts } from '@/lib/posts'
-import { site } from '@/lib/site'
+import { getPosts } from '@/lib/posts';
+import { site } from '@/lib/site';
 
 const escape = (s = '') =>
-  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+  s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 export function GET() {
   const items = getPosts()
@@ -13,9 +13,9 @@ export function GET() {
       <guid>${site.url}/writing/${post.slug}</guid>
       <description>${escape(post.metadata.summary)}</description>
       <pubDate>${new Date(post.metadata.publishedAt).toUTCString()}</pubDate>
-    </item>`
+    </item>`,
     )
-    .join('\n')
+    .join('\n');
 
   const feed = `<?xml version="1.0" encoding="UTF-8" ?>
 <rss version="2.0">
@@ -25,7 +25,7 @@ export function GET() {
     <description>${escape(site.description)}</description>
 ${items}
   </channel>
-</rss>`
+</rss>`;
 
-  return new Response(feed, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } })
+  return new Response(feed, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
 }

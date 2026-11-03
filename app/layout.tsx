@@ -1,13 +1,13 @@
-import './global.css'
-import '@fontsource/silkscreen/400.css'
-import type { Metadata, Viewport } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Nav } from '@/components/nav'
-import { Footer } from '@/components/footer'
-import { site } from '@/lib/site'
+import './global.css';
+import '@fontsource/silkscreen/400.css';
+import type { Metadata, Viewport } from 'next';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
+import { Nav } from '@/components/nav';
+import { Footer } from '@/components/footer';
+import { site } from '@/lib/site';
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -20,16 +20,19 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: 'en_US',
     type: 'website',
-    images: [{ url: `/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}` }],
+    images: [
+      { url: `/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}` },
+    ],
   },
-  twitter: { card: 'summary_large_image', images: [`/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}`] },
+  twitter: {
+    card: 'summary_large_image',
+    images: [`/og?title=${encodeURIComponent('Architecture, platforms and AI-native software')}`],
+  },
   alternates: { types: { 'application/rss+xml': '/rss' } },
   robots: { index: true, follow: true },
-  // Add your Google Search Console verification code here once the domain is live.
-  verification: { google: '' },
-}
+};
 
-export const viewport: Viewport = { themeColor: '#0a0a0a', colorScheme: 'dark' }
+export const viewport: Viewport = { themeColor: '#0a0a0a', colorScheme: 'dark' };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -39,10 +42,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <style>{`.reveal{opacity:1!important;transform:none!important}`}</style>
         </noscript>
       </head>
-      <body className="bg-ink font-sans text-fg antialiased">
+      <body className="bg-ink text-fg font-sans antialiased">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-ink"
+          className="focus:bg-fg focus:text-ink sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-full focus:px-4 focus:py-2"
         >
           Skip to content
         </a>
@@ -53,5 +56,5 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SpeedInsights />
       </body>
     </html>
-  )
+  );
 }

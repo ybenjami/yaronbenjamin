@@ -14,18 +14,18 @@ export const site = {
     github: 'https://github.com/ybenjami',
     resume: '/resume.pdf',
   },
-}
+};
 
 export const themes = [
   { id: 'architecture', label: 'Architecture & Engineering' },
   { id: 'ai-native', label: 'AI-Native Software' },
   { id: 'platforms', label: 'Building & Operating Platforms' },
-] as const
+] as const;
 
-export type ThemeId = (typeof themes)[number]['id']
+export type ThemeId = (typeof themes)[number]['id'];
 
 export function themeLabel(id?: string) {
-  return themes.find((t) => t.id === id)?.label ?? 'Notes'
+  return themes.find((t) => t.id === id)?.label ?? 'Notes';
 }
 
 // Shown on the home page until your first posts are published.
@@ -33,10 +33,21 @@ export function themeLabel(id?: string) {
 export const upcoming: { title: string; theme: ThemeId }[] = [
   { title: 'Building a CMS publishing agent with Eve and Contentful', theme: 'ai-native' },
   { title: 'Why I stopped building websites and started building platforms', theme: 'platforms' },
-  { title: 'Content vs. context: what twenty years of CMS migrations taught me about content models', theme: 'architecture' },
-]
+  {
+    title:
+      'Content vs. context: what twenty years of CMS migrations taught me about content models',
+    theme: 'architecture',
+  },
+];
 
-export const experience: { role: string; org: string; href?: string; years: string; note: string; todo?: string[] }[] = [
+export const experience: {
+  role: string;
+  org: string;
+  href?: string;
+  years: string;
+  note: string;
+  todo?: string[];
+}[] = [
   {
     role: 'Founder & CEO, creator of Cairn',
     org: 'Aionic Digital',
@@ -48,7 +59,7 @@ export const experience: { role: string; org: string; href?: string; years: stri
     role: 'Senior Architect → Director of Technical Services',
     org: 'Authentic Digital',
     years: '2015 – 2024',
-    note: 'Architected composable commerce, CMS and loyalty platforms for global brands, including event-driven backends and middle tiers. Promoted to lead technical services, a team of 60+ across projects for 20+ client brands, while staying architect on the largest. Led technical services through the company\'s acquisition by Concord (an H.I.G. Capital portfolio company) in 2023.',
+    note: "Architected composable commerce, CMS and loyalty platforms for global brands, including event-driven backends and middle tiers. Promoted to lead technical services, a team of 60+ across projects for 20+ client brands, while staying architect on the largest. Led technical services through the company's acquisition by Concord (an H.I.G. Capital portfolio company) in 2023.",
   },
   {
     role: 'Sr. IT Analyst',
@@ -68,4 +79,4 @@ export const experience: { role: string; org: string; href?: string; years: stri
     years: '2006 – 2011',
     note: 'Built web applications and CMS-driven sites for the Defense Commissary Agency, first as a ManTech contractor, then hired on directly.',
   },
-]
+];

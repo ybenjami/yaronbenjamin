@@ -29,7 +29,7 @@ It prepares the content in the CMS and hands it off to the normal review and pub
 
 ![A Slack thread with CMS Draft Agent. I ask it to add a news article about Penguin Point. It replies with a link to the new draft, says it left out the photo credit because the content type has no field for it, and lists the required SEO fields still missing.](/writing/cms-publishing-agent/slack-request.png)
 
-*A request in Slack. The agent creates the draft and tells me what it left out and what's still missing.*
+_A request in Slack. The agent creates the draft and tells me what it left out and what's still missing._
 
 I didn't want to invent a new workflow just because AI was involved. The point was to make the existing workflow more efficient.
 
@@ -76,15 +76,15 @@ Building it turned that balance into a handful of concrete rules:
 
 ![The Contentful content list showing the Penguin Point entry as a News draft, last updated by Yaron Benjamin.](/writing/cms-publishing-agent/contentful-draft-list.png)
 
-*The result in Contentful: a draft, saved under my own account, waiting for review.*
+_The result in Contentful: a draft, saved under my own account, waiting for review._
 
 ![The Penguin Point draft in the Contentful editor. The title, the summary and a body containing all three sentences are filled in, the photo credit appears nowhere, and the status is Draft with the Publish button untouched.](/writing/cms-publishing-agent/contentful-draft-entry.png)
 
-*The draft in the editor. Every sentence made it in, the photo credit didn't, and the Publish button is still a person's to press.*
+_The draft in the editor. Every sentence made it in, the photo credit didn't, and the Publish button is still a person's to press._
 
 ![Another Slack thread. I ask the agent to add an announcement that winter hours start December 1. It creates the draft and says it left the start date field unset because the request didn't specify a year.](/writing/cms-publishing-agent/slack-no-guessing.png)
 
-*A different request. With no year given, the agent left the start date empty rather than guess.*
+_A different request. With no year given, the agent left the start date empty rather than guess._
 
 To keep myself honest, I turned the hardest of these cases into evals: a request with more information than the content type supports, one missing a required field, an ambiguous content type, an update to an already-published entry, and a multi-sentence draft where every sentence has to survive. Contentful is stubbed with fixtures so the tests are repeatable.
 
