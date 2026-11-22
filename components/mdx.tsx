@@ -19,7 +19,9 @@ function RoundedImage(props: any) {
   return <Image className="rounded-2xl" {...props} alt={props.alt ?? ''} />;
 }
 
-function Code({ children, ...props }: { children: string }) {
+function Code({ children, ...props }: { children: string; className?: string }) {
+  // Plain-text blocks (```text) are terminal output or prose, not code: skip syntax highlighting.
+  if (props.className?.includes('language-text')) return <code {...props}>{children}</code>;
   return <code dangerouslySetInnerHTML={{ __html: highlight(children) }} {...props} />;
 }
 

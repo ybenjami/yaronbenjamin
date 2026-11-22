@@ -1,0 +1,179 @@
+---
+title: "The RAG pipeline worked. So why couldn't I trust the results?"
+publishedAt: '2026-11-22'
+summary: 'What building the same retrieval pipeline three ways taught me about embeddings, abstraction and production AI quality.'
+theme: 'ai-native'
+---
+
+I was building a small AI agent that would have fairly deep context about my company. One of the first things it needed was a RAG pipeline, so it could retrieve what we do, the products we've built and our technical capabilities. The idea was to give it enough context to answer questions accurately, and eventually to execute tasks.
+
+I started the usual way: ingest the content, chunk it, embed it, then implement retrieval. Standard RAG architecture work.
+
+But because the exercise was so small and scoped, I could dig into problems that would probably have gone unnoticed in a larger enterprise project. That's where things got interesting.
+
+## The ingestion problem
+
+I used Firecrawl to crawl my company's website. I just wanted to grab the content and move on.
+
+At first glance, everything looked fine. I crawled five pages, extracted 17 chunks using Docling, and generated embeddings with OpenAI's `text-embedding-3-small` model. On the surface, the pipeline had run successfully.
+
+Then I inspected the chunks in detail, and something was clearly wrong.
+
+**The content was dirty.**
+
+There was duplicated navigation, repeated footers and, in several places, words run together because of HTML extraction artifacts.
+
+I spent some time trying to work out the cause. I wasn't inspecting the DOM, writing selectors or deciding exactly what to extract. I was relying on Firecrawl to extract the content and Docling to process and chunk it.
+
+The more I looked, the more I realized part of the problem existed before chunking even started. It brought me back to something I regularly tell clients, and had managed to overlook myself:
+
+**Keep your HTML and content clean and semantic.**
+
+Here's a simplified block of HTML:
+
+```html
+<p><span>This</span><span>is</span><span>some</span><span>content</span></p>
+```
+
+Depending on how the page is styled, this can look perfectly fine to a visitor. But if the visual spacing comes from CSS rather than the text itself, an extractor reading the text content produces:
+
+```text
+Thisissomecontent
+```
+
+It isn't the end of the world, but it certainly isn't clean content to embed.
+
+To be fair, this isn't only an HTML problem. Even a well-structured site can produce poor extraction, depending on how the crawler processes the page.
+
+And beyond the markup, I was rushing ingestion. I wasn't selective about what I crawled or what I let into the knowledge base. That was arguably the bigger mistake: several chunks contained the same navigation and other repeated content.
+
+Why does that matter? When I started testing retrieval, some results didn't seem relevant to the question. In one case, generic homepage content ranked above the specific product content I expected.
+
+The similarity math wasn't wrong. I was searching over content that wasn't clean or useful. I hadn't yet tested whether this would produce a wrong answer from the agent, but I could already see how the quality of the retrieved context would become a problem.
+
+> **Engineering lesson #1:** Successful ingestion doesn't mean usable knowledge.
+
+## Understanding what the framework was actually doing
+
+Because I wanted to understand the retrieval results, I implemented the search three different ways.
+
+I started by calculating cosine similarity directly in TypeScript. Then I moved the embeddings into PostgreSQL and queried them with pgvector. Finally, I introduced LlamaIndex.
+
+The goal wasn't to pick the best implementation. I wanted to understand what was happening during retrieval, how the vectors were being compared, and what LlamaIndex was abstracting away.
+
+With pgvector, I could see the SQL being executed:
+
+```sql
+SELECT
+  content,
+  1 - (embedding <=> $1::vector) AS similarity
+FROM rag_chunks
+ORDER BY embedding <=> $1::vector
+LIMIT 5;
+```
+
+With LlamaIndex, I was effectively doing this:
+
+```typescript
+const retriever = index.asRetriever({
+  similarityTopK: 5,
+});
+
+const results = await retriever.retrieve({
+  query: question,
+});
+```
+
+A lot less code, obviously. But I wanted to know what was happening behind that abstraction.
+
+When I ran the same question through each implementation, I got essentially the same results and similarity scores. That was reassuring.
+
+Then I wrote a custom LlamaIndex retriever to query my existing PostgreSQL table, and something odd happened.
+
+**Every similarity score came back as zero.**
+
+Here's the interesting part: nothing appeared to fail. The application returned five documents, the excerpts were there, and everything looked fine at a glance. It wasn't until I looked at the actual scores that I realized something was wrong.
+
+So I started digging. PostgreSQL wasn't returning a similarity of zero at all. It was returning `NULL`.
+
+![Two terminal tables for the same five results. The first shows the raw SQL similarity as null for every row, next to a numeric similarity of 0. The second shows the LlamaIndex retriever score as 0 for every row.](/writing/rag-pipeline-trust/null-scores.png)
+
+And my code was doing this:
+
+```typescript
+const score = Number(row.similarity);
+```
+
+Which, in JavaScript, means:
+
+```typescript
+Number(null) === 0; // true
+```
+
+I had turned a failed similarity calculation into a legitimate-looking score of zero. It was worse than that, too: with no valid query vector, the `ORDER BY` had nothing to sort on, so the five "top" results were effectively whatever rows the database returned first. The ranking looked real and meant nothing.
+
+Digging further, I found my custom integration was calling `getQueryEmbedding()`, which wasn't returning a usable query vector in this setup. Once I switched to `getTextEmbedding()` and validated the embedding before running the query, the results came back as expected.
+
+Asking _"Which offering runs repetitive business processes using AI agents?"_, TaskRunner ranked first with a similarity of about `0.5963`, matching the earlier implementations.
+
+![Two terminal tables, one for the raw PostgreSQL similarities and one for the LlamaIndex retriever scores. They now match exactly, with TaskRunner first at 0.5963.](/writing/rag-pipeline-trust/fixed-scores.png)
+
+None of this was really a LlamaIndex problem. It was how I had integrated the library and, more importantly, how I had handled an invalid result.
+
+But it got me thinking. Had I not understood the underlying retrieval process, I might have started changing the embeddings, adjusting chunk sizes or investigating PostgreSQL, when none of those was the problem.
+
+That's worth remembering with any of these frameworks. They make implementation much easier, but they don't remove the need to understand what's happening underneath.
+
+> **Engineering lesson #2:** Understanding what a framework abstracts lets you reason about its behavior, and troubleshoot it when things don't work as expected.
+
+## But could I actually trust the results?
+
+At this point I had fixed the integration, and all three approaches returned consistent scores.
+
+Problem solved? Not entirely.
+
+Look closely at the excerpts that came back with those correct scores:
+
+```text
+rank  score   excerpt
+1     0.5963  A shortcut for autonomous workflows and Agentic AI. Driving business efficiencies...
+2     0.5002  Wehelpbusinessesusethemostmoderntechnologytobuildmeaningfulconnectionsanddrivebusinesseffi...
+3     0.4785  Transforming your data with the best of Artificial Intelligence We developed Synapse in or...
+4     0.4664  Wehelpbusinessesusethemostmoderntechnologytobuildmeaningfulconnectionsanddrivebusinesseffi...
+5     0.4608  [About Aionic](https://www.aionicdigital.com/about-aionic) [Insights](https://www.aionicdi...
+```
+
+I was still retrieving chunks with duplicated navigation, run-together text and generic content. The embeddings were valid. PostgreSQL was calculating cosine similarity correctly. LlamaIndex was returning the expected results. And I still wasn't convinced the retrieved context was good enough to hand to an agent.
+
+This is where an important distinction needs to be made: there's a difference between the retrieval operation working correctly and the retrieved evidence actually being useful.
+
+A similarity score of `0.5963` doesn't mean there's a 59.63% chance the answer is correct. It's the cosine similarity between the query embedding and the document embedding. That's useful for ranking, but it says nothing about whether the content is authoritative, current or sufficient to answer the question. And it certainly doesn't guarantee an LLM will use the information correctly.
+
+So even with retrieval working as intended, I hadn't established that the overall system would produce trustworthy answers.
+
+> **Engineering lesson #3:** Correct vector math doesn't guarantee relevant, sufficient or authoritative evidence.
+
+## What I would do differently
+
+I'm fully aware this was a small exercise. Five pages and 17 chunks are hardly representative of an enterprise knowledge base.
+
+That's exactly what made it valuable. I could inspect everything: the extracted content, the chunks, the embeddings, the database queries and the final results. With thousands of documents and millions of embeddings, I suspect some of these problems would have been far harder to spot.
+
+Before putting something like this into production, I would:
+
+- **Invest in ingestion.** Rather than assuming extracted text is usable, validate and normalize it before generating embeddings, and be deliberate about what gets into the knowledge base at all.
+- **Trace every result to its source.** Know where each piece of retrieved information came from, and whether that source should be considered authoritative.
+- **Build an evaluation dataset.** Representative questions with the documents that should support each answer, so retrieval quality is measured rather than judged by asking a few questions and deciding the results look good.
+- **Treat invalid results as errors.** If an embedding isn't generated correctly, or the database returns an invalid similarity, that should fail loudly. It should never quietly become a valid-looking result.
+
+## Final thoughts
+
+I started this exercise to build an agent that understood my company. I meant to get through the RAG part quickly and move on to the more interesting agent work.
+
+Instead, I spent a good amount of time on the mechanics of ingestion, embeddings and retrieval, and I'm glad I did.
+
+What strikes me is that most of these problems aren't unique to AI. Data quality, integration contracts, observability and failure handling are things enterprise architecture has dealt with for years. The difference now is that we're feeding the results into systems that reason over that information, and may take actions based on it. That makes the quality of the underlying evidence even more important.
+
+I certainly haven't solved all of these problems. But I have a much better sense of where things go wrong, and what I'd need to validate before putting RAG into a production application.
+
+**Getting a RAG pipeline to return results is fairly straightforward. Knowing whether those results can be trusted is an entirely different problem.**
