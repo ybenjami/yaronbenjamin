@@ -9,6 +9,8 @@ import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
 import { site } from '@/lib/site';
 
+import Script from 'next/script';
+// ...inside <body>, after <SpeedInsights />:
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: { default: site.title, template: `%s — ${site.name}` },
@@ -54,6 +56,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <Analytics />
         <SpeedInsights />
+        <Script id="apollo-tracker" strategy="afterInteractive">
+          {`function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
+o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,
+o.onload=function(){window.trackingFunctions.onLoad({appId:"6b0658444dc447000c2a9073"})},
+document.head.appendChild(o)}initApollo();`}
+        </Script>
+        <Script id="apollo-tracker" strategy="afterInteractive">
+          {`function initApollo(){var n=Math.random().toString(36).substring(7),o=document.createElement("script");
+o.src="https://assets.apollo.io/micro/website-tracker/tracker.iife.js?nocache="+n,o.async=!0,o.defer=!0,
+o.onload=function(){window.trackingFunctions.onLoad({appId:"6b0658444dc447000c2a9073"})},
+document.head.appendChild(o)}initApollo();`}
+        </Script>
       </body>
     </html>
   );
