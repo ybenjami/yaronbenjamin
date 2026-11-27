@@ -4,7 +4,7 @@ export const site = {
   name: 'Yaron Benjamin',
   title: 'Yaron Benjamin — Architecture, platforms and AI-native software',
   description:
-    'Yaron Benjamin is a software architect who designs and builds platforms, and writes about the decisions behind them. Founder and CEO of Aionic Digital.',
+    'Yaron Benjamin is a software architect and founder of Aionic Digital, writing about enterprise architecture, distributed systems, applied AI and platform engineering.',
   url: 'https://yaronbenjamin.com',
   email: 'yaron@yaronbenjamin.com',
   cairnEmail: 'yaron@aionicdigital.com',
@@ -53,7 +53,7 @@ export const experience: {
     org: 'Aionic Digital',
     href: site.links.aionic,
     years: '2024 – Now',
-    note: 'Architecting client platforms on Contentful and Next.js, building Cairn and AI agents, and leading the 21-person company through the shift to AI.',
+    note: "Leading Aionic Digital's commercial and technical direction while architecting enterprise platforms, headless CMS implementations and distributed integrations. Building Cairn and Conduit as reusable capabilities connecting AI applications to enterprise systems.",
   },
   {
     role: 'Senior Architect → Director of Technical Services',

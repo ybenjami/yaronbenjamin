@@ -54,7 +54,7 @@ export default async function PostPage({ params }: Props) {
             datePublished: publishedAt,
             url: `${site.url}/writing/${slug}`,
             image: `${site.url}/writing/${slug}/opengraph-image`,
-            author: { '@type': 'Person', name: site.name, url: site.url },
+            author: { '@type': 'Person', '@id': `${site.url}/#person`, name: site.name },
           }),
         }}
       />

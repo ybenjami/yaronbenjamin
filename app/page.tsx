@@ -20,9 +20,9 @@ export const metadata: Metadata = {
 };
 
 const glance = [
-  { value: '20 years', label: 'Enterprise, commerce, loyalty and content platforms' },
-  { value: 'Composable', label: 'Headless CMS, commerce, search and event-driven backends' },
-  { value: 'Hands-on', label: 'Building open-source AI agents today' },
+  { value: '20 years', label: 'Enterprise software and platform architecture' },
+  { value: 'Distributed', label: 'Cloud-native systems, composable platforms and integrations' },
+  { value: 'Applied AI', label: 'Agents, MCP, retrieval and AI reliability' },
 ];
 
 type WorkCard = {
@@ -48,14 +48,35 @@ const otherWork: WorkCard[] = [
         >
           Eve
         </a>
-        , Vercel&apos;s open-source framework for building AI agents. It can&apos;t publish: a
-        person always makes that call.
+        , integrated via MCP, with per-user OAuth and least-privilege tool access. It enforces
+        deterministic execution boundaries — it can draft but not publish — and behavioral
+        evaluations verify it stays that way.
       </>
     ),
     links: [
       { href: '/writing/cms-publishing-agent-eve', label: 'Read the post →' },
       { href: 'https://github.com/ybenjami/cms-publishing-agent', label: 'View on GitHub ↗' },
     ],
+  },
+  {
+    kicker: 'Public reference implementation',
+    title: 'Contentful RAG',
+    text: 'An event-driven RAG reference implementation connecting Contentful to a vector-based knowledge store using AWS API Gateway, SQS, Lambda, OpenAI embeddings and PostgreSQL/pgvector. Explores semantic chunking, content lifecycle synchronization and retrieval reliability.',
+    links: [
+      { href: 'https://github.com/ybenjami/contentful-rag', label: 'View on GitHub ↗' },
+      { href: '/writing/rag-pipeline-trust', label: 'Read the article →' },
+    ],
+  },
+  {
+    kicker: 'Enterprise integration architecture · Proprietary',
+    title: 'Conduit',
+    text: 'A domain service and integration architecture designed to expose enterprise capabilities through interoperable interfaces, including MCP, enabling AI applications to interact with existing enterprise systems.',
+  },
+  {
+    kicker: 'First-principles exploration',
+    title: 'RAG From Scratch',
+    text: 'Exploring retrieval-augmented generation from first principles in Node.js, including chunking, embeddings and cosine similarity without framework abstractions.',
+    links: [{ href: 'https://github.com/ybenjami/rag-from-scratch', label: 'View on GitHub ↗' }],
   },
   {
     kicker: 'Composable architecture',
@@ -98,11 +119,23 @@ export default function Home() {
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'Person',
+            '@id': `${site.url}/#person`,
             name: 'Yaron Benjamin',
-            jobTitle: 'Software Architect; Founder & CEO, Aionic Digital',
+            jobTitle: 'Software Architect & Founder',
             url: site.url,
+            image: `${site.url}/headshot.jpg`,
             worksFor: { '@type': 'Organization', name: 'Aionic Digital', url: site.links.aionic },
             sameAs: [site.links.linkedin, site.links.github],
+            knowsAbout: [
+              'Software architecture',
+              'Distributed systems',
+              'Applied AI',
+              'Agent architecture',
+              'Model Context Protocol (MCP)',
+              'Retrieval-augmented generation (RAG)',
+              'Event-driven architecture',
+              'Enterprise integration',
+            ],
           }),
         }}
       />
@@ -116,10 +149,10 @@ export default function Home() {
             I design and build platforms, and write about the decisions behind them.
           </h1>
           <p className="text-muted motion-safe:animate-rise max-w-[620px] text-xl leading-relaxed [animation-delay:180ms]">
-            I&apos;m Yaron Benjamin, a software architect with twenty years across enterprise,
-            commerce, loyalty and content platforms. I&apos;m also founder and CEO of Aionic
-            Digital, where I put that thinking into practice, most recently in Cairn and in AI
-            agents that work inside real systems.
+            I&apos;m Yaron Benjamin, a software architect and founder of Aionic Digital, with twenty
+            years of experience building enterprise software platforms. My work spans distributed
+            systems, composable architecture and applied AI — particularly how intelligent
+            applications can integrate reliably with real enterprise systems.
           </p>
           <div className="motion-safe:animate-rise flex flex-wrap gap-3 pt-2 [animation-delay:270ms]">
             <PillLink href="#writing">Read the writing</PillLink>
